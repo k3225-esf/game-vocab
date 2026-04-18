@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAME VOCAB</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #161a23;
+    --surface2: #1e2433;
+    --accent: #00e5ff;
+    --accent2: #ff6b6b;
+    --accent3: #b8ff6b;
+    --text: #e8eaf0;
+    --muted: #5a6070;
+    --border: #2a3040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(0,229,255,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(255,107,107,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .counter {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    border-radius: 1px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.5;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .english {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(28px, 6vw, 48px);
+    color: var(--text);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    transition: opacity 0.4s ease;
+  }
+
+  .japanese {
+    font-size: clamp(16px, 3vw, 22px);
+    color: var(--muted);
+    line-height: 1.6;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .japanese.hidden {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .japanese.visible {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--accent3);
+  }
+
+  .speaking-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 20px;
+  }
+
+  .bar {
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: none;
+  }
+
+  .speaking .bar:nth-child(1) { animation: wave 0.8s ease-in-out infinite 0s; }
+  .speaking .bar:nth-child(2) { animation: wave 0.8s ease-in-out infinite 0.1s; }
+  .speaking .bar:nth-child(3) { animation: wave 0.8s ease-in-out infinite 0.2s; }
+  .speaking .bar:nth-child(4) { animation: wave 0.8s ease-in-out infinite 0.3s; }
+  .speaking .bar:nth-child(5) { animation: wave 0.8s ease-in-out infinite 0.4s; }
+
+  @keyframes wave {
+    0%, 100% { height: 4px; }
+    50% { height: 18px; }
+  }
+
+  .controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    min-width: 50px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.active { border-color: var(--accent); background: rgba(0,229,255,0.1); color: var(--accent); }
+
+  .btn-play {
+    font-size: 13px;
+    padding: 8px 24px;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+  }
+
+  .btn-play:hover { background: rgba(0,229,255,0.18); }
+  .btn-play.playing { border-color: var(--accent2); color: var(--accent2); background: rgba(255,107,107,0.08); }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+    height: 4px;
+    min-width: 80px;
+  }
+
+  .speed-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 2px;
+    min-height: 14px;
+  }
+
+  .loading {
+    text-align: center;
+    color: var(--muted);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .loading { animation: pulse 1.5s ease-in-out infinite; }
+
+  .shuffle-on { color: var(--accent3) !important; border-color: var(--accent3) !important; background: rgba(184,255,107,0.08) !important; }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="loading" id="loading">LOADING...</div>
+</div>
+
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJyKVZLz-7_bWFPqmHtxFLNhvkGZt_A0MDyBM_NXrBMothbk-tS4X759HNXl3EM_syCm_wq4B9hYG2/pub?output=csv';
+
+let allWords = [];
+let filteredWords = [];
+let currentIndex = 0;
+let isPlaying = false;
+let isShuffle = false;
+let currentLevel = '全て';
+let intervalTimer = null;
+let speechSynth = window.speechSynthesis;
+let phaseTimer = null;
+let intervalSec = 4;
+let phase = 'english';
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let c of line) {
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cols.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = (cols[i] || '').replace(/"/g, '').trim());
+    return obj;
+  }).filter(r => r['英語'] || r['English'] || r[headers[0]]);
+}
+
+function getField(word, keys) {
+  for (let k of keys) { if (word[k]) return word[k]; }
+  return '';
+}
+
+function applyFilter() {
+  filteredWords = currentLevel === '全て'
+    ? [...allWords]
+    : allWords.filter(w => {
+        const lv = getField(w, ['レベル', 'Level', 'level']);
+        return lv === currentLevel;
+      });
+  if (isShuffle) shuffle(filteredWords);
+  currentIndex = 0;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function speak(text, lang, onEnd) {
+  speechSynth.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = lang;
+  utt.rate = 0.9;
+  utt.onend = onEnd || null;
+  speechSynth.speak(utt);
+}
+
+function updateCard(word) {
+  const eng = document.getElementById('eng-text');
+  const jpn = document.getElementById('jpn-text');
+  const tag = document.getElementById('word-tag');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const indicator = document.getElementById('indicator');
+
+  if (!eng) return;
+
+  const engText = getField(word, ['英語', 'English', 'english']);
+  const jpnText = getField(word, ['日本語', 'Japanese', 'japanese']);
+  const tagText = getField(word, ['タグ', 'Tag', 'tag']);
+
+  eng.textContent = engText;
+  jpn.textContent = jpnText;
+  if (tag) tag.textContent = tagText;
+  if (counter) counter.textContent = `${currentIndex + 1} / ${filteredWords.length}`;
+  if (progress) progress.style.width = `${((currentIndex + 1) / filteredWords.length) * 100}%`;
+
+  jpn.classList.remove('visible');
+  jpn.classList.add('hidden');
+  indicator.classList.remove('speaking');
+}
+
+function playPhases(word) {
+  clearTimeout(phaseTimer);
+  const eng = document.getElementById('eng-text');
+  const jpn = document.getElementById('jpn-text');
+  const indicator = document.getElementById('indicator');
+  const status = document.getElementById('status');
+
+  const engText = getField(word, ['英語', 'English', 'english']);
+  const jpnText = getField(word, ['日本語', 'Japanese', 'japanese']);
+
+  if (status) status.textContent = 'SPEAKING EN...';
+  indicator.classList.add('speaking');
+
+  speak(engText, 'en-US', () => {
+    indicator.classList.remove('speaking');
+    phaseTimer = setTimeout(() => {
+      if (!isPlaying) return;
+      jpn.classList.remove('hidden');
+      jpn.classList.add('visible');
+      if (status) status.textContent = 'SPEAKING JP...';
+      indicator.classList.add('speaking');
+      speak(jpnText, 'ja-JP', () => {
+        indicator.classList.remove('speaking');
+        if (status) status.textContent = 'NEXT...';
+        phaseTimer = setTimeout(() => {
+          if (!isPlaying) return;
+          nextWord();
+        }, intervalSec * 600);
+      });
+    }, intervalSec * 400);
+  });
+}
+
+function nextWord() {
+  if (filteredWords.length === 0) return;
+  currentIndex = (currentIndex + 1) % filteredWords.length;
+  const word = filteredWords[currentIndex];
+  updateCard(word);
+  if (isPlaying) playPhases(word);
+}
+
+function startPlay() {
+  if (filteredWords.length === 0) return;
+  isPlaying = true;
+  const playBtn = document.getElementById('play-btn');
+  if (playBtn) { playBtn.textContent = '⏸ PAUSE'; playBtn.classList.add('playing'); }
+  const word = filteredWords[currentIndex];
+  updateCard(word);
+  playPhases(word);
+}
+
+function stopPlay() {
+  isPlaying = false;
+  speechSynth.cancel();
+  clearTimeout(phaseTimer);
+  const playBtn = document.getElementById('play-btn');
+  if (playBtn) { playBtn.textContent = '▶ PLAY'; playBtn.classList.remove('playing'); }
+  const status = document.getElementById('status');
+  if (status) status.textContent = 'PAUSED';
+  const indicator = document.getElementById('indicator');
+  if (indicator) indicator.classList.remove('speaking');
+}
+
+function buildUI() {
+  const app = document.getElementById('app');
+  const levels = ['全て', ...new Set(allWords.map(w => getField(w, ['レベル', 'Level', 'level'])).filter(Boolean))];
+
+  applyFilter();
+
+  app.innerHTML = `
+    <div class="header">
+      <div class="logo">GAME VOCAB</div>
+      <div class="counter" id="counter">1 / ${filteredWords.length}</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress" style="width: ${filteredWords.length ? (1/filteredWords.length*100) : 0}%"></div>
+    </div>
+
+    <div class="card">
+      <div class="tag" id="word-tag">--</div>
+      <div class="english" id="eng-text">${filteredWords[0] ? getField(filteredWords[0], ['英語','English','english']) : '--'}</div>
+      <div class="japanese hidden" id="jpn-text">${filteredWords[0] ? getField(filteredWords[0], ['日本語','Japanese','japanese']) : '--'}</div>
+      <div class="speaking-indicator" id="indicator">
+        <div class="bar" style="height:4px"></div>
+        <div class="bar" style="height:4px"></div>
+        <div class="bar" style="height:4px"></div>
+        <div class="bar" style="height:4px"></div>
+        <div class="bar" style="height:4px"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-row">
+        <button class="btn btn-play" id="play-btn" onclick="togglePlay()">▶ PLAY</button>
+        <button class="btn" onclick="prevWord()">◀ PREV</button>
+        <button class="btn" onclick="nextWord()">NEXT ▶</button>
+        <button class="btn" id="shuffle-btn" onclick="toggleShuffle()">⇄ SHUFFLE</button>
+      </div>
+
+      <div class="control-row">
+        <span class="label">LEVEL</span>
+        <div class="btn-group" id="level-btns">
+          ${levels.map(lv => `<button class="btn ${lv === currentLevel ? 'active' : ''}" onclick="setLevel('${lv}')">${lv}</button>`).join('')}
+        </div>
+      </div>
+
+      <div class="control-row">
+        <span class="label">SPEED</span>
+        <div class="speed-control">
+          <span style="font-size:10px;color:var(--muted);font-family:monospace">遅</span>
+          <input type="range" id="speed-range" min="2" max="8" step="0.5" value="${intervalSec}" oninput="setSpeed(this.value)">
+          <span style="font-size:10px;color:var(--muted);font-family:monospace">速</span>
+          <span class="speed-val" id="speed-val">${intervalSec}s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="status" id="status">READY</div>
+  `;
+
+  if (filteredWords[0]) updateCard(filteredWords[0]);
+}
+
+function togglePlay() {
+  if (isPlaying) { stopPlay(); } else { startPlay(); }
+}
+
+function prevWord() {
+  speechSynth.cancel();
+  clearTimeout(phaseTimer);
+  if (filteredWords.length === 0) return;
+  currentIndex = (currentIndex - 1 + filteredWords.length) % filteredWords.length;
+  updateCard(filteredWords[currentIndex]);
+  if (isPlaying) playPhases(filteredWords[currentIndex]);
+}
+
+function setLevel(lv) {
+  currentLevel = lv;
+  const wasPlaying = isPlaying;
+  stopPlay();
+  applyFilter();
+  const btns = document.querySelectorAll('#level-btns .btn');
+  const levels = ['全て', ...new Set(allWords.map(w => getField(w, ['レベル', 'Level', 'level'])).filter(Boolean))];
+  btns.forEach((b, i) => { b.classList.toggle('active', levels[i] === lv); });
+  document.getElementById('counter').textContent = `1 / ${filteredWords.length}`;
+  if (filteredWords[0]) updateCard(filteredWords[0]);
+  if (wasPlaying) startPlay();
+}
+
+function toggleShuffle() {
+  isShuffle = !isShuffle;
+  const btn = document.getElementById('shuffle-btn');
+  btn.classList.toggle('shuffle-on', isShuffle);
+  if (isShuffle) shuffle(filteredWords);
+  else applyFilter();
+  currentIndex = 0;
+  if (filteredWords[0]) updateCard(filteredWords[0]);
+}
+
+function setSpeed(val) {
+  intervalSec = parseFloat(val);
+  document.getElementById('speed-val').textContent = `${val}s`;
+}
+
+fetch(SHEET_URL)
+  .then(r => r.text())
+  .then(text => {
+    allWords = parseCSV(text);
+    if (allWords.length === 0) throw new Error('No data');
+    buildUI();
+  })
+  .catch(err => {
+    document.getElementById('app').innerHTML = `
+      <div style="text-align:center;color:#ff6b6b;font-family:monospace;font-size:13px;letter-spacing:2px;">
+        LOAD ERROR<br><br>
+        <span style="font-size:11px;color:#5a6070;">スプレッドシートの公開設定を確認してください</span>
+      </div>`;
+  });
+</script>
+</body>
+</html>
