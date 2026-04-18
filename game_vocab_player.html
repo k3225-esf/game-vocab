@@ -17,22 +17,22 @@
     --muted: #5a6070;
     --border: #2a3040;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+  html, body { height: 100%; }
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Noto Sans JP', sans-serif;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 20px;
-    overflow: hidden;
   }
-
   body::before {
     content: '';
     position: fixed;
@@ -42,51 +42,12 @@
       radial-gradient(ellipse at 80% 50%, rgba(255,107,107,0.04) 0%, transparent 50%);
     pointer-events: none;
   }
-
-  .app {
-    width: 100%;
-    max-width: 680px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
-
-  .counter {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 2px;
-  }
-
-  .progress-bar {
-    width: 100%;
-    height: 2px;
-    background: var(--border);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.3s ease;
-    border-radius: 1px;
-  }
-
+  .app { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 20px; }
+  .header { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 4px; }
+  .counter { font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 2px; }
+  .progress-bar { width: 100%; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); transition: width 0.3s ease; }
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -98,10 +59,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     gap: 16px;
   }
-
   .card::before {
     content: '';
     position: absolute;
@@ -111,7 +73,6 @@
     opacity: 0.5;
     border-radius: 16px 16px 0 0;
   }
-
   .tag {
     font-family: 'Share Tech Mono', monospace;
     font-size: 10px;
@@ -123,59 +84,29 @@
     border-radius: 4px;
     text-transform: uppercase;
   }
-
   .english {
     font-family: 'Share Tech Mono', monospace;
     font-size: clamp(28px, 6vw, 48px);
     color: var(--text);
     letter-spacing: 2px;
     line-height: 1.2;
-    transition: opacity 0.4s ease;
   }
-
   .japanese {
     font-size: clamp(16px, 3vw, 22px);
     color: var(--muted);
     line-height: 1.6;
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
-
-  .japanese.hidden {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  .japanese.visible {
-    opacity: 1;
-    transform: translateY(0);
-    color: var(--accent3);
-  }
-
-  .speaking-indicator {
-    display: flex;
-    gap: 4px;
-    align-items: flex-end;
-    height: 20px;
-  }
-
-  .bar {
-    width: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    animation: none;
-  }
-
+  .japanese.hidden { opacity: 0; transform: translateY(8px); }
+  .japanese.visible { opacity: 1; transform: translateY(0); color: var(--accent3); }
+  .speaking-indicator { display: flex; gap: 4px; align-items: flex-end; height: 20px; }
+  .bar { width: 3px; background: var(--accent); border-radius: 2px; animation: none; height: 4px; }
   .speaking .bar:nth-child(1) { animation: wave 0.8s ease-in-out infinite 0s; }
   .speaking .bar:nth-child(2) { animation: wave 0.8s ease-in-out infinite 0.1s; }
   .speaking .bar:nth-child(3) { animation: wave 0.8s ease-in-out infinite 0.2s; }
   .speaking .bar:nth-child(4) { animation: wave 0.8s ease-in-out infinite 0.3s; }
   .speaking .bar:nth-child(5) { animation: wave 0.8s ease-in-out infinite 0.4s; }
-
-  @keyframes wave {
-    0%, 100% { height: 4px; }
-    50% { height: 18px; }
-  }
-
+  @keyframes wave { 0%, 100% { height: 4px; } 50% { height: 18px; } }
   .controls {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -185,28 +116,9 @@
     flex-direction: column;
     gap: 16px;
   }
-
-  .control-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    min-width: 50px;
-  }
-
-  .btn-group {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
+  .control-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .label { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 2px; min-width: 50px; }
+  .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
   .btn {
     font-family: 'Share Tech Mono', monospace;
     font-size: 11px;
@@ -219,123 +131,84 @@
     cursor: pointer;
     transition: all 0.15s ease;
   }
-
   .btn:hover { border-color: var(--accent); color: var(--accent); }
   .btn.active { border-color: var(--accent); background: rgba(0,229,255,0.1); color: var(--accent); }
-
-  .btn-play {
-    font-size: 13px;
-    padding: 8px 24px;
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(0,229,255,0.08);
-  }
-
+  .btn-play { font-size: 13px; padding: 8px 24px; border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.08); }
   .btn-play:hover { background: rgba(0,229,255,0.18); }
   .btn-play.playing { border-color: var(--accent2); color: var(--accent2); background: rgba(255,107,107,0.08); }
-
-  .speed-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-  }
-
-  input[type="range"] {
-    flex: 1;
-    accent-color: var(--accent);
-    height: 4px;
-    min-width: 80px;
-  }
-
-  .speed-val {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    min-width: 32px;
-    text-align: right;
-  }
-
-  .status {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    text-align: center;
-    letter-spacing: 2px;
-    min-height: 14px;
-  }
-
-  .loading {
-    text-align: center;
-    color: var(--muted);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 3px;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  .loading { animation: pulse 1.5s ease-in-out infinite; }
-
+  .speed-control { display: flex; align-items: center; gap: 10px; flex: 1; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); height: 4px; min-width: 80px; }
+  .speed-val { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--accent); min-width: 32px; text-align: right; }
+  .status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--muted); text-align: center; letter-spacing: 2px; min-height: 14px; }
   .shuffle-on { color: var(--accent3) !important; border-color: var(--accent3) !important; background: rgba(184,255,107,0.08) !important; }
 </style>
 </head>
 <body>
-
 <div class="app" id="app">
-  <div class="loading" id="loading">LOADING...</div>
+  <div class="header">
+    <div class="logo">GAME VOCAB</div>
+    <div class="counter" id="counter">-- / --</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+  <div class="card">
+    <div class="tag" id="word-tag">--</div>
+    <div class="english" id="eng-text">LOADING...</div>
+    <div class="japanese hidden" id="jpn-text"></div>
+    <div class="speaking-indicator" id="indicator">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="control-row">
+      <button class="btn btn-play" id="play-btn" onclick="togglePlay()">&#9654; PLAY</button>
+      <button class="btn" onclick="prevWord()">&#9664; PREV</button>
+      <button class="btn" onclick="nextWord()">NEXT &#9654;</button>
+      <button class="btn" id="shuffle-btn" onclick="toggleShuffle()">&#8644; SHUFFLE</button>
+    </div>
+    <div class="control-row">
+      <span class="label">LEVEL</span>
+      <div class="btn-group" id="level-btns"></div>
+    </div>
+    <div class="control-row">
+      <span class="label">TAG</span>
+      <div class="btn-group" id="tag-btns"></div>
+    </div>
+    <div class="control-row">
+      <span class="label">SPEED</span>
+      <div class="speed-control">
+        <span style="font-size:10px;color:var(--muted);font-family:monospace">遅</span>
+        <input type="range" id="speed-range" min="2" max="10" step="0.5" value="4" oninput="setSpeed(this.value)">
+        <span style="font-size:10px;color:var(--muted);font-family:monospace">速</span>
+        <span class="speed-val" id="speed-val">4s</span>
+      </div>
+    </div>
+  </div>
+  <div class="status" id="status">READY</div>
 </div>
 
 <script>
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJyKVZLz-7_bWFPqmHtxFLNhvkGZt_A0MDyBM_NXrBMothbk-tS4X759HNXl3EM_syCm_wq4B9hYG2/pub?output=csv';
+const ALL_WORDS = [{"e": "save", "j": "セーブする・保存する", "t": "PC", "l": "初級"}, {"e": "load", "j": "ロードする・読み込む", "t": "PC", "l": "初級"}, {"e": "quit", "j": "終了する・やめる", "t": "PC", "l": "初級"}, {"e": "pause", "j": "一時停止する", "t": "PC", "l": "初級"}, {"e": "resume", "j": "再開する", "t": "PC", "l": "初級"}, {"e": "settings", "j": "設定・セッティング", "t": "PC", "l": "初級"}, {"e": "menu", "j": "メニュー", "t": "PC", "l": "初級"}, {"e": "option", "j": "オプション・選択肢", "t": "PC", "l": "初級"}, {"e": "volume", "j": "音量", "t": "PC", "l": "初級"}, {"e": "screen", "j": "画面・スクリーン", "t": "PC", "l": "初級"}, {"e": "display", "j": "ディスプレイ・表示する", "t": "PC", "l": "初級"}, {"e": "keyboard", "j": "キーボード", "t": "PC", "l": "初級"}, {"e": "mouse", "j": "マウス", "t": "PC", "l": "初級"}, {"e": "click", "j": "クリックする", "t": "PC", "l": "初級"}, {"e": "scroll", "j": "スクロールする", "t": "PC", "l": "初級"}, {"e": "drag", "j": "ドラッグする", "t": "PC", "l": "初級"}, {"e": "folder", "j": "フォルダ", "t": "PC", "l": "初級"}, {"e": "file", "j": "ファイル", "t": "PC", "l": "初級"}, {"e": "copy", "j": "コピーする", "t": "PC", "l": "初級"}, {"e": "paste", "j": "貼り付ける", "t": "PC", "l": "初級"}, {"e": "delete", "j": "削除する", "t": "PC", "l": "初級"}, {"e": "open", "j": "開く", "t": "PC", "l": "初級"}, {"e": "close", "j": "閉じる", "t": "PC", "l": "初級"}, {"e": "search", "j": "検索する", "t": "PC", "l": "初級"}, {"e": "login", "j": "ログインする", "t": "PC", "l": "初級"}, {"e": "logout", "j": "ログアウトする", "t": "PC", "l": "初級"}, {"e": "password", "j": "パスワード", "t": "PC", "l": "初級"}, {"e": "username", "j": "ユーザー名", "t": "PC", "l": "初級"}, {"e": "account", "j": "アカウント", "t": "PC", "l": "初級"}, {"e": "profile", "j": "プロフィール", "t": "PC", "l": "初級"}, {"e": "notification", "j": "通知", "t": "PC", "l": "初級"}, {"e": "message", "j": "メッセージ", "t": "PC", "l": "初級"}, {"e": "link", "j": "リンク", "t": "PC", "l": "初級"}, {"e": "browser", "j": "ブラウザ", "t": "PC", "l": "初級"}, {"e": "website", "j": "ウェブサイト", "t": "PC", "l": "初級"}, {"e": "app", "j": "アプリ", "t": "PC", "l": "初級"}, {"e": "software", "j": "ソフトウェア", "t": "PC", "l": "初級"}, {"e": "hardware", "j": "ハードウェア", "t": "PC", "l": "初級"}, {"e": "memory", "j": "メモリ", "t": "PC", "l": "初級"}, {"e": "storage", "j": "ストレージ・記憶容量", "t": "PC", "l": "初級"}, {"e": "battery", "j": "バッテリー・電池", "t": "PC", "l": "初級"}, {"e": "power", "j": "電源・パワー", "t": "PC", "l": "初級"}, {"e": "cable", "j": "ケーブル", "t": "PC", "l": "初級"}, {"e": "connect", "j": "接続する", "t": "PC", "l": "初級"}, {"e": "wireless", "j": "ワイヤレス・無線", "t": "PC", "l": "初級"}, {"e": "internet", "j": "インターネット", "t": "PC", "l": "初級"}, {"e": "network", "j": "ネットワーク", "t": "PC", "l": "初級"}, {"e": "monitor", "j": "モニター・ディスプレイ", "t": "PC", "l": "初級"}, {"e": "GPU", "j": "グラフィックカード・GPU", "t": "PC", "l": "初級"}, {"e": "CPU", "j": "プロセッサー・CPU", "t": "PC", "l": "初級"}, {"e": "RAM", "j": "メモリ・RAM", "t": "PC", "l": "初級"}, {"e": "SSD", "j": "SSD・ソリッドステートドライブ", "t": "PC", "l": "初級"}, {"e": "HDD", "j": "ハードディスク・HDD", "t": "PC", "l": "初級"}, {"e": "fan", "j": "冷却ファン", "t": "PC", "l": "初級"}, {"e": "driver", "j": "デバイスドライバー", "t": "PC", "l": "初級"}, {"e": "operating system", "j": "OS・オペレーティングシステム", "t": "PC", "l": "初級"}, {"e": "desktop", "j": "デスクトップ", "t": "PC", "l": "初級"}, {"e": "laptop", "j": "ラップトップ・ノートPC", "t": "PC", "l": "初級"}, {"e": "USB", "j": "USB接続", "t": "PC", "l": "初級"}, {"e": "HDMI", "j": "HDMI端子", "t": "PC", "l": "初級"}, {"e": "bluetooth", "j": "ブルートゥース", "t": "PC", "l": "初級"}, {"e": "wifi", "j": "Wi-Fi・ワイファイ", "t": "PC", "l": "初級"}, {"e": "router", "j": "ルーター", "t": "PC", "l": "初級"}, {"e": "firewall", "j": "ファイアウォール", "t": "PC", "l": "初級"}, {"e": "backup", "j": "バックアップ", "t": "PC", "l": "初級"}, {"e": "restore", "j": "復元する・リストア", "t": "PC", "l": "初級"}, {"e": "format", "j": "フォーマットする・初期化", "t": "PC", "l": "初級"}, {"e": "shortcut", "j": "ショートカット", "t": "PC", "l": "初級"}, {"e": "icon", "j": "アイコン", "t": "PC", "l": "初級"}, {"e": "taskbar", "j": "タスクバー", "t": "PC", "l": "初級"}, {"e": "window", "j": "ウィンドウ", "t": "PC", "l": "初級"}, {"e": "tab", "j": "タブ", "t": "PC", "l": "初級"}, {"e": "zoom", "j": "ズームする", "t": "PC", "l": "初級"}, {"e": "minimize", "j": "最小化する", "t": "PC", "l": "初級"}, {"e": "maximize", "j": "最大化する", "t": "PC", "l": "初級"}, {"e": "fullscreen", "j": "フルスクリーン・全画面", "t": "PC", "l": "初級"}, {"e": "refresh", "j": "更新する・リフレッシュ", "t": "PC", "l": "初級"}, {"e": "error", "j": "エラー・エラーメッセージ", "t": "PC", "l": "初級"}, {"e": "warning", "j": "警告・ワーニング", "t": "PC", "l": "初級"}, {"e": "confirm", "j": "確認する・コンファーム", "t": "PC", "l": "初級"}, {"e": "cancel", "j": "キャンセルする", "t": "PC", "l": "初級"}, {"e": "apply", "j": "適用する", "t": "PC", "l": "初級"}, {"e": "reset", "j": "リセットする", "t": "PC", "l": "初級"}, {"e": "default", "j": "デフォルト・初期設定", "t": "PC", "l": "初級"}, {"e": "custom", "j": "カスタム・カスタマイズ", "t": "PC", "l": "初級"}, {"e": "language", "j": "言語・ランゲージ", "t": "PC", "l": "初級"}, {"e": "region", "j": "地域・リージョン", "t": "PC", "l": "初級"}, {"e": "font", "j": "フォント", "t": "PC", "l": "初級"}, {"e": "theme", "j": "テーマ", "t": "PC", "l": "初級"}, {"e": "dark mode", "j": "ダークモード", "t": "PC", "l": "初級"}, {"e": "accessibility", "j": "アクセシビリティ", "t": "PC", "l": "初級"}, {"e": "player", "j": "プレイヤー・選手", "t": "Gaming", "l": "初級"}, {"e": "win", "j": "勝つ・勝利", "t": "Gaming", "l": "初級"}, {"e": "lose", "j": "負ける・敗北", "t": "Gaming", "l": "初級"}, {"e": "score", "j": "スコア・得点", "t": "Gaming", "l": "初級"}, {"e": "point", "j": "ポイント・点", "t": "Gaming", "l": "初級"}, {"e": "life", "j": "ライフ・残機", "t": "Gaming", "l": "初級"}, {"e": "health", "j": "HP・体力", "t": "Gaming", "l": "初級"}, {"e": "item", "j": "アイテム", "t": "Gaming", "l": "初級"}, {"e": "weapon", "j": "武器", "t": "Gaming", "l": "初級"}, {"e": "armor", "j": "防具・鎧", "t": "Gaming", "l": "初級"}, {"e": "shield", "j": "盾・シールド", "t": "Gaming", "l": "初級"}, {"e": "sword", "j": "剣・ソード", "t": "Gaming", "l": "初級"}, {"e": "attack", "j": "攻撃する", "t": "Gaming", "l": "初級"}, {"e": "defend", "j": "防御する", "t": "Gaming", "l": "初級"}, {"e": "jump", "j": "ジャンプする", "t": "Gaming", "l": "初級"}, {"e": "shoot", "j": "撃つ・シュート", "t": "Gaming", "l": "初級"}, {"e": "hit", "j": "ヒットする・当てる", "t": "Gaming", "l": "初級"}, {"e": "miss", "j": "外す・ミスする", "t": "Gaming", "l": "初級"}, {"e": "block", "j": "ブロックする", "t": "Gaming", "l": "初級"}, {"e": "avoid", "j": "避ける", "t": "Gaming", "l": "初級"}, {"e": "escape", "j": "逃げる・エスケープ", "t": "Gaming", "l": "初級"}, {"e": "collect", "j": "集める", "t": "Gaming", "l": "初級"}, {"e": "buy", "j": "買う・購入する", "t": "Gaming", "l": "初級"}, {"e": "sell", "j": "売る", "t": "Gaming", "l": "初級"}, {"e": "trade", "j": "交換する・トレードする", "t": "Gaming", "l": "初級"}, {"e": "map", "j": "マップ・地図", "t": "Gaming", "l": "初級"}, {"e": "area", "j": "エリア・区域", "t": "Gaming", "l": "初級"}, {"e": "zone", "j": "ゾーン・地帯", "t": "Gaming", "l": "初級"}, {"e": "stage", "j": "ステージ", "t": "Gaming", "l": "初級"}, {"e": "character", "j": "キャラクター", "t": "Gaming", "l": "初級"}, {"e": "hero", "j": "ヒーロー・主人公", "t": "Gaming", "l": "初級"}, {"e": "enemy", "j": "敵・エネミー", "t": "Gaming", "l": "初級"}, {"e": "monster", "j": "モンスター・怪物", "t": "Gaming", "l": "初級"}, {"e": "ally", "j": "味方・アライ", "t": "Gaming", "l": "初級"}, {"e": "team", "j": "チーム", "t": "Gaming", "l": "初級"}, {"e": "solo", "j": "ソロ・1人で", "t": "Gaming", "l": "初級"}, {"e": "online", "j": "オンライン", "t": "Gaming", "l": "初級"}, {"e": "offline", "j": "オフライン", "t": "Gaming", "l": "初級"}, {"e": "mission", "j": "ミッション・任務", "t": "Gaming", "l": "初級"}, {"e": "goal", "j": "ゴール・目標", "t": "Gaming", "l": "初級"}, {"e": "reward", "j": "報酬・リワード", "t": "Gaming", "l": "初級"}, {"e": "coin", "j": "コイン・お金", "t": "Gaming", "l": "初級"}, {"e": "key", "j": "鍵・キー", "t": "Gaming", "l": "初級"}, {"e": "chest", "j": "宝箱・チェスト", "t": "Gaming", "l": "初級"}, {"e": "treasure", "j": "宝・トレジャー", "t": "Gaming", "l": "初級"}, {"e": "trap", "j": "罠・トラップ", "t": "Gaming", "l": "初級"}, {"e": "tower", "j": "塔・タワー", "t": "Gaming", "l": "初級"}, {"e": "castle", "j": "城・キャッスル", "t": "Gaming", "l": "初級"}, {"e": "village", "j": "村・ビレッジ", "t": "Gaming", "l": "初級"}, {"e": "town", "j": "町・タウン", "t": "Gaming", "l": "初級"}, {"e": "fire", "j": "火・ファイア属性", "t": "Gaming", "l": "初級"}, {"e": "water", "j": "水・ウォーター属性", "t": "Gaming", "l": "初級"}, {"e": "ice", "j": "氷・アイス属性", "t": "Gaming", "l": "初級"}, {"e": "lightning", "j": "雷・ライトニング属性", "t": "Gaming", "l": "初級"}, {"e": "dark", "j": "闇・ダーク属性", "t": "Gaming", "l": "初級"}, {"e": "light", "j": "光・ライト属性", "t": "Gaming", "l": "初級"}, {"e": "magic", "j": "魔法・マジック", "t": "Gaming", "l": "初級"}, {"e": "class", "j": "クラス・職業", "t": "RPG", "l": "初級"}, {"e": "race", "j": "種族・レース", "t": "RPG", "l": "初級"}, {"e": "skill", "j": "スキル・技", "t": "RPG", "l": "初級"}, {"e": "ability", "j": "能力・アビリティ", "t": "RPG", "l": "初級"}, {"e": "potion", "j": "ポーション・回復薬", "t": "RPG", "l": "初級"}, {"e": "staff", "j": "杖・スタッフ", "t": "RPG", "l": "初級"}, {"e": "bow", "j": "弓・ボウ", "t": "RPG", "l": "初級"}, {"e": "arrow", "j": "矢・アロー", "t": "RPG", "l": "初級"}, {"e": "axe", "j": "斧・アックス", "t": "RPG", "l": "初級"}, {"e": "spear", "j": "槍・スピア", "t": "RPG", "l": "初級"}, {"e": "dagger", "j": "短剣・ダガー", "t": "RPG", "l": "初級"}, {"e": "helmet", "j": "ヘルメット・兜", "t": "RPG", "l": "初級"}, {"e": "boots", "j": "ブーツ・靴", "t": "RPG", "l": "初級"}, {"e": "cloak", "j": "マント・クローク", "t": "RPG", "l": "初級"}, {"e": "NPC", "j": "ノンプレイヤーキャラクター", "t": "RPG", "l": "初級"}, {"e": "shop", "j": "ショップ・店", "t": "RPG", "l": "初級"}, {"e": "inn", "j": "宿屋・イン", "t": "RPG", "l": "初級"}, {"e": "king", "j": "王・キング", "t": "RPG", "l": "初級"}, {"e": "knight", "j": "騎士・ナイト", "t": "RPG", "l": "初級"}, {"e": "wizard", "j": "魔法使い・ウィザード", "t": "RPG", "l": "初級"}, {"e": "warrior", "j": "戦士・ウォリアー", "t": "RPG", "l": "初級"}, {"e": "archer", "j": "弓使い・アーチャー", "t": "RPG", "l": "初級"}, {"e": "thief", "j": "盗賊・シーフ", "t": "RPG", "l": "初級"}, {"e": "priest", "j": "僧侶・プリースト", "t": "RPG", "l": "初級"}, {"e": "mage", "j": "魔法使い・メイジ", "t": "RPG", "l": "初級"}, {"e": "rogue", "j": "ローグ・盗賊", "t": "RPG", "l": "初級"}, {"e": "paladin", "j": "パラディン・聖騎士", "t": "RPG", "l": "初級"}, {"e": "dragon", "j": "ドラゴン", "t": "RPG", "l": "初級"}, {"e": "demon", "j": "悪魔・デーモン", "t": "RPG", "l": "初級"}, {"e": "angel", "j": "天使・エンジェル", "t": "RPG", "l": "初級"}, {"e": "ghost", "j": "幽霊・ゴースト", "t": "RPG", "l": "初級"}, {"e": "goblin", "j": "ゴブリン", "t": "RPG", "l": "初級"}, {"e": "orc", "j": "オーク", "t": "RPG", "l": "初級"}, {"e": "elf", "j": "エルフ", "t": "RPG", "l": "初級"}, {"e": "dwarf", "j": "ドワーフ", "t": "RPG", "l": "初級"}, {"e": "exp", "j": "経験値・EXP", "t": "RPG", "l": "初級"}, {"e": "damage", "j": "ダメージ", "t": "RPG", "l": "初級"}, {"e": "critical", "j": "クリティカル・急所攻撃", "t": "RPG", "l": "初級"}, {"e": "evade", "j": "回避する・イベイド", "t": "RPG", "l": "初級"}, {"e": "resist", "j": "耐性・レジスト", "t": "RPG", "l": "初級"}, {"e": "weak", "j": "弱点・ウィーク", "t": "RPG", "l": "初級"}, {"e": "absorb", "j": "吸収する・アブソーブ", "t": "RPG", "l": "初級"}, {"e": "poison", "j": "毒・ポイズン", "t": "RPG", "l": "初級"}, {"e": "sleep", "j": "睡眠・スリープ状態", "t": "RPG", "l": "初級"}, {"e": "blind", "j": "盲目・ブラインド状態", "t": "RPG", "l": "初級"}, {"e": "silence", "j": "沈黙・サイレンス状態", "t": "RPG", "l": "初級"}, {"e": "slow", "j": "スロー状態・鈍化", "t": "RPG", "l": "初級"}, {"e": "haste", "j": "ヘイスト・加速状態", "t": "RPG", "l": "初級"}, {"e": "regen", "j": "リジェネ・自動回復", "t": "RPG", "l": "初級"}, {"e": "turn", "j": "ターン", "t": "RPG", "l": "初級"}, {"e": "round", "j": "ラウンド", "t": "RPG", "l": "初級"}, {"e": "flee", "j": "逃げる・フリー", "t": "RPG", "l": "初級"}, {"e": "steal", "j": "盗む・スチール", "t": "RPG", "l": "初級"}, {"e": "examine", "j": "調べる", "t": "RPG", "l": "初級"}, {"e": "rest", "j": "休憩する・レスト", "t": "RPG", "l": "初級"}, {"e": "camp", "j": "キャンプする", "t": "RPG", "l": "初級"}, {"e": "explore", "j": "探索する", "t": "RPG", "l": "初級"}, {"e": "discover", "j": "発見する", "t": "RPG", "l": "初級"}, {"e": "unlock", "j": "解放する・アンロック", "t": "RPG", "l": "初級"}, {"e": "complete", "j": "完了する・コンプリート", "t": "RPG", "l": "初級"}, {"e": "fail", "j": "失敗する", "t": "RPG", "l": "初級"}, {"e": "retry", "j": "リトライする", "t": "RPG", "l": "初級"}, {"e": "new game", "j": "ニューゲーム・最初から", "t": "Gaming", "l": "初級"}, {"e": "game over", "j": "ゲームオーバー", "t": "Gaming", "l": "初級"}, {"e": "tutorial", "j": "チュートリアル", "t": "Gaming", "l": "初級"}, {"e": "hint", "j": "ヒント", "t": "Gaming", "l": "初級"}, {"e": "guide", "j": "ガイド・攻略", "t": "Gaming", "l": "初級"}, {"e": "cheat", "j": "チート・不正行為", "t": "Gaming", "l": "初級"}, {"e": "bug", "j": "バグ・不具合", "t": "Gaming", "l": "初級"}, {"e": "glitch", "j": "グリッチ・バグ", "t": "Gaming", "l": "初級"}, {"e": "version", "j": "バージョン", "t": "Gaming", "l": "初級"}, {"e": "release", "j": "リリース・発売", "t": "Gaming", "l": "初級"}, {"e": "sequel", "j": "続編・シーケル", "t": "Gaming", "l": "初級"}, {"e": "remake", "j": "リメイク版", "t": "Gaming", "l": "初級"}, {"e": "console", "j": "コンソール・家庭用ゲーム機", "t": "Gaming", "l": "初級"}, {"e": "controller", "j": "コントローラー", "t": "Gaming", "l": "初級"}, {"e": "button", "j": "ボタン", "t": "Gaming", "l": "初級"}, {"e": "analog stick", "j": "アナログスティック", "t": "Gaming", "l": "初級"}, {"e": "d-pad", "j": "十字キー", "t": "Gaming", "l": "初級"}, {"e": "vibration", "j": "振動・バイブレーション", "t": "Gaming", "l": "初級"}, {"e": "headset", "j": "ヘッドセット", "t": "Gaming", "l": "初級"}, {"e": "difficulty", "j": "難易度・ディフィカルティ", "t": "Gaming", "l": "初級"}, {"e": "easy", "j": "イージー・簡単", "t": "Gaming", "l": "初級"}, {"e": "normal", "j": "ノーマル・普通", "t": "Gaming", "l": "初級"}, {"e": "hard", "j": "ハード・難しい", "t": "Gaming", "l": "初級"}, {"e": "challenge", "j": "チャレンジ・挑戦", "t": "Gaming", "l": "初級"}, {"e": "practice", "j": "練習・プラクティス", "t": "Gaming", "l": "初級"}, {"e": "training", "j": "トレーニング", "t": "Gaming", "l": "初級"}, {"e": "beginner", "j": "ビギナー・初心者", "t": "Gaming", "l": "初級"}, {"e": "expert", "j": "エキスパート・上級者", "t": "Gaming", "l": "初級"}, {"e": "master", "j": "マスター・達人", "t": "Gaming", "l": "初級"}, {"e": "tier", "j": "ティア・段階", "t": "Gaming", "l": "初級"}, {"e": "bronze", "j": "ブロンズ", "t": "Gaming", "l": "初級"}, {"e": "silver", "j": "シルバー", "t": "Gaming", "l": "初級"}, {"e": "platinum", "j": "プラチナ", "t": "Gaming", "l": "初級"}, {"e": "diamond", "j": "ダイヤモンド", "t": "Gaming", "l": "初級"}, {"e": "legendary", "j": "レジェンダリー・伝説級", "t": "Gaming", "l": "初級"}, {"e": "rare", "j": "レア・希少", "t": "Gaming", "l": "初級"}, {"e": "common", "j": "コモン・一般的", "t": "Gaming", "l": "初級"}, {"e": "epic", "j": "エピック・叙事詩的", "t": "Gaming", "l": "初級"}, {"e": "unique", "j": "ユニーク・唯一の", "t": "Gaming", "l": "初級"}, {"e": "limited", "j": "リミテッド・限定", "t": "Gaming", "l": "初級"}, {"e": "event", "j": "イベント", "t": "Gaming", "l": "初級"}, {"e": "bonus", "j": "ボーナス", "t": "Gaming", "l": "初級"}, {"e": "free", "j": "フリー・無料", "t": "Gaming", "l": "初級"}, {"e": "premium", "j": "プレミアム・有料", "t": "Gaming", "l": "初級"}, {"e": "subscription", "j": "サブスクリプション・月額制", "t": "Gaming", "l": "初級"}, {"e": "demo", "j": "デモ・体験版", "t": "Gaming", "l": "初級"}, {"e": "beta", "j": "ベータ版", "t": "Gaming", "l": "初級"}, {"e": "server", "j": "サーバー", "t": "Gaming", "l": "初級"}, {"e": "ping", "j": "ピング・応答時間", "t": "Gaming", "l": "初級"}, {"e": "connection", "j": "接続・コネクション", "t": "Gaming", "l": "初級"}, {"e": "disconnect", "j": "切断・ディスコネクト", "t": "Gaming", "l": "初級"}, {"e": "timeout", "j": "タイムアウト", "t": "Gaming", "l": "初級"}, {"e": "queue", "j": "キュー・待ち列", "t": "Gaming", "l": "初級"}, {"e": "lobby", "j": "ロビー", "t": "Gaming", "l": "初級"}, {"e": "invite", "j": "招待する・インバイト", "t": "Gaming", "l": "初級"}, {"e": "join", "j": "参加する・ジョイン", "t": "Gaming", "l": "初級"}, {"e": "leave", "j": "退出する・リーブ", "t": "Gaming", "l": "初級"}, {"e": "kick", "j": "キックする・強制退出", "t": "Gaming", "l": "初級"}, {"e": "ban", "j": "BANする・禁止", "t": "Gaming", "l": "初級"}, {"e": "report", "j": "報告する・レポート", "t": "Gaming", "l": "初級"}, {"e": "mute", "j": "ミュートする", "t": "Gaming", "l": "初級"}, {"e": "chat", "j": "チャット", "t": "Gaming", "l": "初級"}, {"e": "voice chat", "j": "ボイスチャット", "t": "Gaming", "l": "初級"}, {"e": "friend", "j": "フレンド・友達", "t": "Gaming", "l": "初級"}, {"e": "follow", "j": "フォローする", "t": "Gaming", "l": "初級"}, {"e": "gift", "j": "ギフト・プレゼント", "t": "Gaming", "l": "初級"}, {"e": "share", "j": "シェアする・共有", "t": "Gaming", "l": "初級"}, {"e": "stream", "j": "ストリーム・配信", "t": "Gaming", "l": "初級"}, {"e": "record", "j": "録画する", "t": "Gaming", "l": "初級"}, {"e": "replay", "j": "リプレイ・再生", "t": "Gaming", "l": "Gaming"}, {"e": "highlight", "j": "ハイライト", "t": "Gaming", "l": "初級"}, {"e": "clip", "j": "クリップ・切り抜き", "t": "Gaming", "l": "初級"}, {"e": "season", "j": "シーズン", "t": "Gaming", "l": "初級"}, {"e": "placement", "j": "プレイスメント・仮配置戦", "t": "Gaming", "l": "初級"}, {"e": "rank up", "j": "ランクアップする", "t": "Gaming", "l": "初級"}, {"e": "rank down", "j": "ランクダウンする", "t": "Gaming", "l": "初級"}, {"e": "promotion", "j": "昇格・プロモーション", "t": "Gaming", "l": "初級"}, {"e": "demotion", "j": "降格・デモーション", "t": "Gaming", "l": "初級"}, {"e": "subtitle", "j": "字幕・サブタイトル", "t": "Gaming", "l": "初級"}, {"e": "colorblind mode", "j": "色覚サポートモード", "t": "Gaming", "l": "初級"}, {"e": "remaster", "j": "リマスター版", "t": "Gaming", "l": "初級"}, {"e": "port", "j": "移植版・ポート", "t": "Gaming", "l": "初級"}, {"e": "prequel", "j": "前日譚・プリクエル", "t": "Gaming", "l": "初級"}, {"e": "alpha", "j": "アルファ版", "t": "Gaming", "l": "初級"}, {"e": "launch", "j": "ローンチ・発売", "t": "Gaming", "l": "初級"}, {"e": "region lock", "j": "リージョンロック・地域制限", "t": "Gaming", "l": "初級"}, {"e": "game pass", "j": "ゲームパス・遊び放題サービス", "t": "Gaming", "l": "初級"}, {"e": "microtransaction", "j": "マイクロトランザクション・少額課金", "t": "Gaming", "l": "初級"}, {"e": "loot box", "j": "ルートボックス・ガチャ", "t": "Gaming", "l": "初級"}, {"e": "battle pass", "j": "バトルパス", "t": "Gaming", "l": "初級"}, {"e": "season pass", "j": "シーズンパス", "t": "Gaming", "l": "初級"}, {"e": "free to play", "j": "基本無料・F2P", "t": "Gaming", "l": "初級"}, {"e": "pay to win", "j": "課金有利・P2W", "t": "Gaming", "l": "初級"}, {"e": "cross platform", "j": "クロスプラットフォーム", "t": "Gaming", "l": "初級"}, {"e": "cross play", "j": "クロスプレイ", "t": "Gaming", "l": "初級"}, {"e": "cloud save", "j": "クラウドセーブ", "t": "Gaming", "l": "初級"}, {"e": "auto save", "j": "オートセーブ", "t": "Gaming", "l": "初級"}, {"e": "manual save", "j": "マニュアルセーブ", "t": "Gaming", "l": "初級"}, {"e": "save slot", "j": "セーブスロット", "t": "Gaming", "l": "初級"}, {"e": "overwrite", "j": "上書き保存する", "t": "Gaming", "l": "初級"}, {"e": "new save", "j": "新規セーブ", "t": "Gaming", "l": "初級"}, {"e": "delete save", "j": "セーブデータ削除", "t": "Gaming", "l": "初級"}, {"e": "frame", "j": "フレーム", "t": "Gaming", "l": "初級"}, {"e": "fps", "j": "FPS・フレームレート", "t": "Gaming", "l": "初級"}, {"e": "resolution", "j": "解像度", "t": "Gaming", "l": "初級"}, {"e": "graphics", "j": "グラフィックス・画質", "t": "Gaming", "l": "初級"}, {"e": "texture", "j": "テクスチャ・質感", "t": "Gaming", "l": "初級"}, {"e": "shadow", "j": "シャドウ・影", "t": "Gaming", "l": "初級"}, {"e": "anti-aliasing", "j": "アンチエイリアス", "t": "Gaming", "l": "初級"}, {"e": "vsync", "j": "垂直同期・Vsync", "t": "Gaming", "l": "初級"}, {"e": "field of view", "j": "視野角・FOV", "t": "Gaming", "l": "初級"}, {"e": "sensitivity", "j": "感度・センシティビティ", "t": "Gaming", "l": "初級"}, {"e": "invert", "j": "反転する・インバート", "t": "Gaming", "l": "初級"}, {"e": "vibration", "j": "バイブレーション・振動", "t": "Gaming", "l": "初級"}, {"e": "aim assist", "j": "エイムアシスト", "t": "Gaming", "l": "初級"}, {"e": "crosshair", "j": "照準・クロスヘア", "t": "Gaming", "l": "初級"}, {"e": "minimap", "j": "ミニマップ", "t": "Gaming", "l": "初級"}, {"e": "HUD", "j": "HUD・画面表示情報", "t": "Gaming", "l": "初級"}, {"e": "compass", "j": "コンパス・方位磁針", "t": "Gaming", "l": "初級"}, {"e": "waypoint", "j": "ウェイポイント・目的地マーク", "t": "Gaming", "l": "初級"}, {"e": "objective", "j": "オブジェクティブ・目標", "t": "Gaming", "l": "初級"}, {"e": "marker", "j": "マーカー・目印", "t": "Gaming", "l": "初級"}, {"e": "ping", "j": "ピンを打つ・マーキング", "t": "Gaming", "l": "初級"}, {"e": "quest log", "j": "クエストログ・依頼一覧", "t": "RPG", "l": "初級"}, {"e": "world map", "j": "ワールドマップ", "t": "RPG", "l": "初級"}, {"e": "fast travel", "j": "ファストトラベル・瞬間移動", "t": "RPG", "l": "初級"}, {"e": "teleport", "j": "テレポートする", "t": "RPG", "l": "初級"}, {"e": "warp", "j": "ワープする", "t": "RPG", "l": "初級"}, {"e": "respawn point", "j": "リスポーン地点", "t": "RPG", "l": "初級"}, {"e": "save point", "j": "セーブポイント", "t": "RPG", "l": "初級"}, {"e": "bonfire", "j": "篝火・ボンファイア（ソウルシリーズ）", "t": "RPG", "l": "初級"}, {"e": "wayshrine", "j": "祠・ワープ地点", "t": "RPG", "l": "初級"}, {"e": "merchant", "j": "商人・ショップNPC", "t": "RPG", "l": "初級"}, {"e": "blackboard", "j": "掲示板・クエスト受付", "t": "RPG", "l": "初級"}, {"e": "notice board", "j": "依頼掲示板", "t": "RPG", "l": "初級"}, {"e": "accept", "j": "受注する・承諾する", "t": "RPG", "l": "初級"}, {"e": "decline", "j": "断る・辞退する", "t": "RPG", "l": "初級"}, {"e": "hand in", "j": "納品する・クリア報告する", "t": "RPG", "l": "初級"}, {"e": "reward", "j": "報酬を受け取る", "t": "RPG", "l": "初級"}, {"e": "required level", "j": "必要レベル", "t": "RPG", "l": "初級"}, {"e": "max level", "j": "最大レベル・カンスト", "t": "RPG", "l": "初級"}, {"e": "cap", "j": "上限・キャップ", "t": "RPG", "l": "初級"}, {"e": "overflow", "j": "オーバーフロー・上限超え", "t": "RPG", "l": "初級"}, {"e": "prestige", "j": "プレステージ・上限超えリセット", "t": "RPG", "l": "初級"}, {"e": "rebirth", "j": "転生・リバース", "t": "RPG", "l": "初級"}, {"e": "new game plus", "j": "強くてニューゲーム", "t": "RPG", "l": "初級"}, {"e": "true ending", "j": "トゥルーエンド", "t": "RPG", "l": "初級"}, {"e": "bad ending", "j": "バッドエンド", "t": "RPG", "l": "初級"}, {"e": "good ending", "j": "グッドエンド", "t": "RPG", "l": "初級"}, {"e": "multiple ending", "j": "マルチエンディング", "t": "RPG", "l": "初級"}, {"e": "flag", "j": "フラグ・イベント発生条件", "t": "RPG", "l": "初級"}, {"e": "trigger", "j": "イベントトリガー・発動条件", "t": "RPG", "l": "初級"}, {"e": "event", "j": "イベント・発生演出", "t": "RPG", "l": "初級"}, {"e": "cutscene skip", "j": "カットシーンスキップ", "t": "RPG", "l": "初級"}, {"e": "auto battle", "j": "オートバトル", "t": "RPG", "l": "初級"}, {"e": "turn order", "j": "行動順・ターン順", "t": "RPG", "l": "初級"}, {"e": "initiative", "j": "先制・イニシアティブ", "t": "RPG", "l": "初級"}, {"e": "aggro", "j": "ヘイト・敵の注目を集める", "t": "RPG", "l": "初級"}, {"e": "taunt", "j": "挑発する・ターゲットを集める", "t": "RPG", "l": "初級"}, {"e": "tank", "j": "タンク・盾役", "t": "RPG", "l": "初級"}, {"e": "healer", "j": "ヒーラー・回復役", "t": "RPG", "l": "初級"}, {"e": "DPS", "j": "アタッカー・火力役", "t": "RPG", "l": "初級"}, {"e": "support", "j": "サポート・補助役", "t": "RPG", "l": "初級"}, {"e": "formation", "j": "陣形・パーティ配置", "t": "RPG", "l": "初級"}, {"e": "front row", "j": "前衛", "t": "RPG", "l": "初級"}, {"e": "back row", "j": "後衛", "t": "RPG", "l": "初級"}, {"e": "slot", "j": "スロット・装備枠", "t": "RPG", "l": "初級"}, {"e": "two-handed", "j": "両手持ち", "t": "RPG", "l": "初級"}, {"e": "one-handed", "j": "片手持ち", "t": "RPG", "l": "初級"}, {"e": "off-hand", "j": "オフハンド・サブウェポン", "t": "RPG", "l": "初級"}, {"e": "main hand", "j": "メインハンド・主武器", "t": "RPG", "l": "初級"}, {"e": "set bonus", "j": "セットボーナス", "t": "RPG", "l": "初級"}, {"e": "trait", "j": "トレイト・特性", "t": "RPG", "l": "初級"}, {"e": "perk", "j": "パーク・特典効果", "t": "RPG", "l": "初級"}, {"e": "mastery", "j": "マスタリー・熟練度", "t": "RPG", "l": "初級"}, {"e": "proficiency", "j": "習熟度・プロフィシエンシー", "t": "RPG", "l": "初級"}, {"e": "throughput", "j": "スループット・処理速度", "t": "PC", "l": "中級"}, {"e": "bottleneck", "j": "ボトルネック・処理の詰まり", "t": "PC", "l": "中級"}, {"e": "overclocking", "j": "オーバークロック", "t": "PC", "l": "中級"}, {"e": "thermal throttling", "j": "サーマルスロットリング・熱による速度低下", "t": "PC", "l": "中級"}, {"e": "TDP", "j": "熱設計電力・TDP", "t": "PC", "l": "中級"}, {"e": "clock speed", "j": "クロック周波数", "t": "PC", "l": "中級"}, {"e": "core", "j": "コア・処理コア数", "t": "PC", "l": "中級"}, {"e": "thread", "j": "スレッド・処理スレッド", "t": "PC", "l": "中級"}, {"e": "cache", "j": "キャッシュ・高速メモリ", "t": "PC", "l": "中級"}, {"e": "VRAM", "j": "ビデオメモリ・VRAM", "t": "PC", "l": "中級"}, {"e": "GDDR", "j": "グラフィックメモリ規格", "t": "PC", "l": "中級"}, {"e": "PCIe", "j": "PCIエクスプレス・拡張スロット規格", "t": "PC", "l": "中級"}, {"e": "motherboard", "j": "マザーボード", "t": "PC", "l": "中級"}, {"e": "chipset", "j": "チップセット", "t": "PC", "l": "中級"}, {"e": "heatsink", "j": "ヒートシンク・放熱板", "t": "PC", "l": "中級"}, {"e": "thermal paste", "j": "グリス・熱伝導ペースト", "t": "PC", "l": "中級"}, {"e": "liquid cooling", "j": "水冷・液体冷却", "t": "PC", "l": "中級"}, {"e": "air cooling", "j": "空冷", "t": "PC", "l": "中級"}, {"e": "power supply", "j": "電源ユニット・PSU", "t": "PC", "l": "中級"}, {"e": "wattage", "j": "ワット数・消費電力", "t": "PC", "l": "中級"}, {"e": "benchmark", "j": "ベンチマーク・性能テスト", "t": "PC", "l": "中級"}, {"e": "stress test", "j": "ストレステスト", "t": "PC", "l": "中級"}, {"e": "frametime", "j": "フレームタイム・描画間隔", "t": "PC", "l": "中級"}, {"e": "1% low", "j": "1%ロー・最低フレームレート", "t": "PC", "l": "中級"}, {"e": "0.1% low", "j": "0.1%ロー・瞬間最低フレームレート", "t": "PC", "l": "中級"}, {"e": "stutter", "j": "スタッター・カクつき", "t": "PC", "l": "中級"}, {"e": "tearing", "j": "ティアリング・画面の横線ズレ", "t": "PC", "l": "中級"}, {"e": "G-Sync", "j": "G-Sync・可変リフレッシュレート（NVIDIA）", "t": "PC", "l": "中級"}, {"e": "FreeSync", "j": "FreeSync・可変リフレッシュレート（AMD）", "t": "PC", "l": "中級"}, {"e": "refresh rate", "j": "リフレッシュレート・Hz", "t": "PC", "l": "中級"}, {"e": "HDR", "j": "HDR・ハイダイナミックレンジ", "t": "PC", "l": "中級"}, {"e": "color depth", "j": "色深度", "t": "PC", "l": "中級"}, {"e": "pixel", "j": "ピクセル・画素", "t": "PC", "l": "中級"}, {"e": "aspect ratio", "j": "アスペクト比・画面比率", "t": "PC", "l": "中級"}, {"e": "ultrawide", "j": "ウルトラワイド・超横長モニター", "t": "PC", "l": "中級"}, {"e": "dual monitor", "j": "デュアルモニター", "t": "PC", "l": "中級"}, {"e": "multi-monitor", "j": "マルチモニター環境", "t": "PC", "l": "中級"}, {"e": "polling rate", "j": "ポーリングレート・マウス応答速度", "t": "PC", "l": "中級"}, {"e": "DPI", "j": "DPI・マウス感度単位", "t": "PC", "l": "中級"}, {"e": "mechanical keyboard", "j": "メカニカルキーボード", "t": "PC", "l": "中級"}, {"e": "linear switch", "j": "リニアスイッチ（押し感なし）", "t": "PC", "l": "中級"}, {"e": "tactile switch", "j": "タクタイルスイッチ（カチッとする）", "t": "PC", "l": "中級"}, {"e": "clicky switch", "j": "クリッキースイッチ（音あり）", "t": "PC", "l": "中級"}, {"e": "actuation force", "j": "アクチュエーション圧・押下圧", "t": "PC", "l": "中級"}, {"e": "actuation point", "j": "アクチュエーションポイント・反応点", "t": "PC", "l": "中級"}, {"e": "key rollover", "j": "キーロールオーバー・同時押し対応数", "t": "PC", "l": "中級"}, {"e": "anti-ghosting", "j": "アンチゴースト・誤入力防止", "t": "PC", "l": "中級"}, {"e": "macro", "j": "マクロ・自動操作登録", "t": "PC", "l": "中級"}, {"e": "keybind", "j": "キーバインド・キー割り当て", "t": "PC", "l": "中級"}, {"e": "hotkey", "j": "ホットキー・即時操作キー", "t": "PC", "l": "中級"}, {"e": "rebind", "j": "キー再設定", "t": "PC", "l": "中級"}, {"e": "profile", "j": "操作プロファイル・設定セット", "t": "PC", "l": "中級"}, {"e": "peripheral", "j": "周辺機器・ペリフェラル", "t": "PC", "l": "中級"}, {"e": "haptic feedback", "j": "ハプティクス・触覚フィードバック", "t": "PC", "l": "中級"}, {"e": "surround sound", "j": "サラウンドサウンド", "t": "PC", "l": "中級"}, {"e": "spatial audio", "j": "空間オーディオ", "t": "PC", "l": "中級"}, {"e": "audio codec", "j": "オーディオコーデック", "t": "PC", "l": "中級"}, {"e": "noise cancellation", "j": "ノイズキャンセリング", "t": "PC", "l": "中級"}, {"e": "latency compensation", "j": "レイテンシ補正", "t": "PC", "l": "中級"}, {"e": "input lag", "j": "入力遅延・インプットラグ", "t": "PC", "l": "中級"}, {"e": "display lag", "j": "表示遅延・ディスプレイラグ", "t": "PC", "l": "中級"}, {"e": "encoder", "j": "エンコーダー・映像圧縮", "t": "PC", "l": "中級"}, {"e": "bitrate", "j": "ビットレート・データ量", "t": "PC", "l": "中級"}, {"e": "compression", "j": "圧縮・コンプレッション", "t": "PC", "l": "中級"}, {"e": "codec", "j": "コーデック・圧縮形式", "t": "PC", "l": "中級"}, {"e": "streaming quality", "j": "配信品質", "t": "PC", "l": "中級"}, {"e": "OBS", "j": "OBS・配信録画ソフト", "t": "PC", "l": "中級"}, {"e": "overlay", "j": "オーバーレイ・画面上表示", "t": "PC", "l": "中級"}, {"e": "capture card", "j": "キャプチャーカード", "t": "PC", "l": "中級"}, {"e": "passthrough", "j": "パススルー・遅延なし出力", "t": "PC", "l": "中級"}, {"e": "upscaling", "j": "アップスケーリング・解像度引き上げ", "t": "PC", "l": "中級"}, {"e": "DLSS", "j": "DLSS・AI解像度補完（NVIDIA）", "t": "PC", "l": "中級"}, {"e": "FSR", "j": "FSR・AMD解像度補完技術", "t": "PC", "l": "中級"}, {"e": "ray tracing", "j": "レイトレーシング・光の反射描写", "t": "PC", "l": "中級"}, {"e": "ambient occlusion", "j": "アンビエントオクルージョン・陰影処理", "t": "PC", "l": "中級"}, {"e": "anisotropic filtering", "j": "異方性フィルタリング", "t": "PC", "l": "中級"}, {"e": "motion blur", "j": "モーションブラー・残像効果", "t": "PC", "l": "中級"}, {"e": "depth of field", "j": "被写界深度・背景ぼかし", "t": "PC", "l": "中級"}, {"e": "bloom", "j": "ブルーム・光の滲み効果", "t": "PC", "l": "中級"}, {"e": "chromatic aberration", "j": "色収差効果", "t": "PC", "l": "中級"}, {"e": "film grain", "j": "フィルムグレイン・ざらつき効果", "t": "PC", "l": "中級"}, {"e": "vignette", "j": "ビネット・画面端の暗み", "t": "PC", "l": "中級"}, {"e": "draw distance", "j": "描画距離", "t": "PC", "l": "中級"}, {"e": "level of detail", "j": "LOD・距離による品質変化", "t": "PC", "l": "中級"}, {"e": "pop-in", "j": "ポップイン・オブジェクト突然出現", "t": "PC", "l": "中級"}, {"e": "tessellation", "j": "テッセレーション・面の細分化", "t": "PC", "l": "中級"}, {"e": "shader", "j": "シェーダー・描画プログラム", "t": "PC", "l": "中級"}, {"e": "procedural generation", "j": "プロシージャル生成・自動生成", "t": "Gaming", "l": "中級"}, {"e": "roguelike", "j": "ローグライク", "t": "Gaming", "l": "中級"}, {"e": "roguelite", "j": "ローグライト", "t": "Gaming", "l": "中級"}, {"e": "permadeath", "j": "パーマデス・完全死亡", "t": "Gaming", "l": "中級"}, {"e": "run", "j": "ラン・1周プレイ", "t": "Gaming", "l": "中級"}, {"e": "seed", "j": "シード値・乱数の種", "t": "Gaming", "l": "中級"}, {"e": "synergy", "j": "シナジー・相乗効果", "t": "Gaming", "l": "中級"}, {"e": "build diversity", "j": "ビルドの多様性", "t": "Gaming", "l": "中級"}, {"e": "risk vs reward", "j": "リスクとリターン", "t": "Gaming", "l": "中級"}, {"e": "snowball", "j": "スノーボール・有利が膨らんでいく", "t": "Gaming", "l": "中級"}, {"e": "comeback mechanic", "j": "逆転システム", "t": "Gaming", "l": "中級"}, {"e": "catch-up mechanic", "j": "追いつきシステム", "t": "Gaming", "l": "中級"}, {"e": "rubber banding", "j": "ラバーバンド・AI補正", "t": "Gaming", "l": "中級"}, {"e": "soft cap", "j": "ソフトキャップ・緩やかな上限", "t": "Gaming", "l": "中級"}, {"e": "hard cap", "j": "ハードキャップ・絶対的な上限", "t": "Gaming", "l": "中級"}, {"e": "diminishing returns", "j": "逓減・効果が薄れていく", "t": "Gaming", "l": "中級"}, {"e": "opportunity cost", "j": "機会コスト・選択の代償", "t": "Gaming", "l": "中級"}, {"e": "min-max", "j": "ミンマックス・数値を徹底最適化", "t": "Gaming", "l": "中級"}, {"e": "theory craft", "j": "セオリークラフト・理論上最強構成を考える", "t": "Gaming", "l": "中級"}, {"e": "git gud", "j": "上手くなれ・腕を磨け（スラング）", "t": "Gaming", "l": "中級"}, {"e": "skill ceiling", "j": "スキルシーリング・上達の限界値", "t": "Gaming", "l": "中級"}, {"e": "skill floor", "j": "スキルフロア・最低限必要な技術", "t": "Gaming", "l": "中級"}, {"e": "mechanical skill", "j": "メカニカルスキル・操作技術", "t": "Gaming", "l": "中級"}, {"e": "game sense", "j": "ゲームセンス・状況判断力", "t": "Gaming", "l": "中級"}, {"e": "macro play", "j": "マクロプレイ・大局的な戦略", "t": "Gaming", "l": "中級"}, {"e": "micro play", "j": "マイクロプレイ・細かい操作技術", "t": "Gaming", "l": "中級"}, {"e": "decision making", "j": "意思決定・デシジョンメイキング", "t": "Gaming", "l": "中級"}, {"e": "adaptation", "j": "アダプテーション・相手に合わせた対応", "t": "Gaming", "l": "中級"}, {"e": "read", "j": "読む・相手の行動を予測する", "t": "Gaming", "l": "中級"}, {"e": "predict", "j": "予測する・プリディクト", "t": "Gaming", "l": "中級"}, {"e": "react", "j": "反応する・リアクト", "t": "Gaming", "l": "中級"}, {"e": "punish", "j": "パニッシュ・相手のミスを咎める", "t": "Gaming", "l": "中級"}, {"e": "whiff punish", "j": "空振り狩り", "t": "Gaming", "l": "中級"}, {"e": "pressure", "j": "プレッシャー・圧力をかける", "t": "Gaming", "l": "中級"}, {"e": "zoning", "j": "ゾーニング・間合い管理", "t": "Gaming", "l": "中級"}, {"e": "footsies", "j": "フッツィーズ・間合いの駆け引き", "t": "Gaming", "l": "中級"}, {"e": "neutral", "j": "ニュートラル・均衡状態", "t": "Gaming", "l": "中級"}, {"e": "advantage", "j": "アドバンテージ・有利状況", "t": "Gaming", "l": "中級"}, {"e": "disadvantage", "j": "ディスアドバンテージ・不利状況", "t": "Gaming", "l": "中級"}, {"e": "frame data", "j": "フレームデータ", "t": "Gaming", "l": "中級"}, {"e": "startup frames", "j": "発生フレーム", "t": "Gaming", "l": "中級"}, {"e": "active frames", "j": "持続フレーム", "t": "Gaming", "l": "中級"}, {"e": "recovery frames", "j": "硬直フレーム", "t": "Gaming", "l": "中級"}, {"e": "frame trap", "j": "フレームトラップ", "t": "Gaming", "l": "中級"}, {"e": "safe on block", "j": "ガードされても安全", "t": "Gaming", "l": "中級"}, {"e": "unsafe on block", "j": "ガードされると反確", "t": "Gaming", "l": "中級"}, {"e": "overhead", "j": "オーバーヘッド・しゃがみガード不能攻撃", "t": "Gaming", "l": "中級"}, {"e": "mix-up", "j": "択・揺さぶり攻撃", "t": "Gaming", "l": "中級"}, {"e": "high-low mix-up", "j": "上中下の択", "t": "Gaming", "l": "中級"}, {"e": "okizeme", "j": "起き攻め", "t": "Gaming", "l": "中級"}, {"e": "vortex", "j": "ボルテックス・逃げられない択", "t": "Gaming", "l": "中級"}, {"e": "reset", "j": "リセット・コンボ後に択をかけ直す", "t": "Gaming", "l": "中級"}, {"e": "tech", "j": "テクニカルな対処法・脱出操作", "t": "Gaming", "l": "中級"}, {"e": "DI", "j": "ダメージ影響・吹き飛び変更操作", "t": "Gaming", "l": "中級"}, {"e": "invincibility frames", "j": "無敵フレーム・Iフレーム", "t": "Gaming", "l": "中級"}, {"e": "super armor", "j": "スーパーアーマー・怯み無効", "t": "Gaming", "l": "中級"}, {"e": "hyper armor", "j": "ハイパーアーマー・ダメージ軽減無効", "t": "Gaming", "l": "中級"}, {"e": "armor break", "j": "アーマーブレイク・スーパーアーマー無効化", "t": "Gaming", "l": "中級"}, {"e": "guard break", "j": "ガードブレイク", "t": "Gaming", "l": "中級"}, {"e": "guard crush", "j": "ガードクラッシュ", "t": "Gaming", "l": "中級"}, {"e": "chip damage", "j": "チップダメージ・ガード削りダメージ", "t": "Gaming", "l": "中級"}, {"e": "gray health", "j": "グレー体力・回復可能なダメージ", "t": "Gaming", "l": "中級"}, {"e": "burst", "j": "バースト・緊急回避技", "t": "Gaming", "l": "中級"}, {"e": "meter", "j": "メーター・ゲージ", "t": "Gaming", "l": "中級"}, {"e": "resource management", "j": "リソース管理", "t": "Gaming", "l": "中級"}, {"e": "economy", "j": "エコノミー・資源管理", "t": "Gaming", "l": "中級"}, {"e": "currency", "j": "通貨・カレンシー", "t": "Gaming", "l": "中級"}, {"e": "inflation", "j": "インフレ・価値の低下", "t": "Gaming", "l": "中級"}, {"e": "deflation", "j": "デフレ・価値の上昇", "t": "Gaming", "l": "中級"}, {"e": "trade-off", "j": "トレードオフ・何かを犠牲にした選択", "t": "Gaming", "l": "中級"}, {"e": "investment", "j": "投資・長期的な利益のための消費", "t": "Gaming", "l": "中級"}, {"e": "return on investment", "j": "投資対効果", "t": "Gaming", "l": "中級"}, {"e": "efficiency", "j": "効率・エフィシェンシー", "t": "Gaming", "l": "中級"}, {"e": "tempo", "j": "テンポ・行動の速さ・先手", "t": "Gaming", "l": "中級"}, {"e": "initiative", "j": "主導権・イニシアティブ", "t": "Gaming", "l": "中級"}, {"e": "turn advantage", "j": "先手・手番有利", "t": "Gaming", "l": "中級"}, {"e": "card advantage", "j": "カードアドバンテージ", "t": "Gaming", "l": "中級"}, {"e": "hand size", "j": "手札枚数", "t": "Gaming", "l": "中級"}, {"e": "draw", "j": "ドロー・カードを引く", "t": "Gaming", "l": "中級"}, {"e": "mill", "j": "デッキを削る", "t": "Gaming", "l": "中級"}, {"e": "burn", "j": "バーン・ダメージを与える", "t": "Gaming", "l": "中級"}, {"e": "aggro", "j": "アグロ・速攻デッキ戦略", "t": "Gaming", "l": "中級"}, {"e": "control", "j": "コントロール・妨害・管理型戦略", "t": "Gaming", "l": "中級"}, {"e": "midrange", "j": "ミッドレンジ・中間的な戦略", "t": "Gaming", "l": "中級"}, {"e": "combo", "j": "コンボデッキ", "t": "Gaming", "l": "中級"}, {"e": "tempo deck", "j": "テンポデッキ", "t": "Gaming", "l": "中級"}, {"e": "value", "j": "バリュー・費用対効果の高い動き", "t": "Gaming", "l": "中級"}, {"e": "swing", "j": "スウィング・盤面を一変させる動き", "t": "Gaming", "l": "中級"}, {"e": "stabilize", "j": "安定させる", "t": "Gaming", "l": "中級"}, {"e": "stabilization", "j": "スタビライゼーション・安定化", "t": "Gaming", "l": "中級"}, {"e": "outvalue", "j": "アウトバリュー・長期的に有利をとる", "t": "Gaming", "l": "中級"}, {"e": "outplay", "j": "アウトプレイ・技術で上回る", "t": "Gaming", "l": "中級"}, {"e": "outscale", "j": "アウトスケール・後半に有利になる", "t": "Gaming", "l": "中級"}, {"e": "scale", "j": "スケール・成長する・後半に強くなる", "t": "Gaming", "l": "中級"}, {"e": "late game power", "j": "後半の強さ", "t": "Gaming", "l": "中級"}, {"e": "early game", "j": "序盤", "t": "Gaming", "l": "中級"}, {"e": "mid game", "j": "中盤", "t": "Gaming", "l": "中級"}, {"e": "late game", "j": "終盤", "t": "Gaming", "l": "中級"}, {"e": "win condition", "j": "勝ち筋・ウィンコンディション", "t": "Gaming", "l": "中級"}, {"e": "lose condition", "j": "負け筋", "t": "Gaming", "l": "中級"}, {"e": "pivot", "j": "方針転換する", "t": "Gaming", "l": "中級"}, {"e": "adapt", "j": "適応する・アダプト", "t": "Gaming", "l": "中級"}, {"e": "punish window", "j": "反撃できる隙", "t": "Gaming", "l": "中級"}, {"e": "opening", "j": "隙・オープニング", "t": "Gaming", "l": "中級"}, {"e": "commitment", "j": "コミット・取り消せない行動", "t": "Gaming", "l": "中級"}, {"e": "bait", "j": "釣り・誘い", "t": "Gaming", "l": "中級"}, {"e": "feint", "j": "フェイント", "t": "Gaming", "l": "中級"}, {"e": "mixup", "j": "揺さぶり・ミックスアップ", "t": "Gaming", "l": "中級"}, {"e": "spacing", "j": "スペーシング・間合い管理", "t": "Gaming", "l": "中級"}, {"e": "positioning", "j": "ポジショニング・立ち位置", "t": "Gaming", "l": "中級"}, {"e": "rotation", "j": "ローテーション・移動・担当エリアの交代", "t": "Gaming", "l": "中級"}, {"e": "rotate", "j": "ローテートする", "t": "Gaming", "l": "中級"}, {"e": "flank", "j": "側面を取る・挟み撃ち", "t": "Gaming", "l": "中級"}, {"e": "split push", "j": "スプリットプッシュ・分散攻撃", "t": "Gaming", "l": "中級"}, {"e": "dive", "j": "ダイブ・奥まで突っ込む", "t": "Gaming", "l": "中級"}, {"e": "peel", "j": "ピール・味方を守る", "t": "Gaming", "l": "中級"}, {"e": "engage", "j": "エンゲージ・戦闘開始する", "t": "Gaming", "l": "中級"}, {"e": "disengage", "j": "ディスエンゲージ・離脱する", "t": "Gaming", "l": "中級"}, {"e": "sustain", "j": "サステイン・戦闘持続力", "t": "Gaming", "l": "中級"}, {"e": "burst damage", "j": "バースト火力・瞬間火力", "t": "Gaming", "l": "中級"}, {"e": "sustained damage", "j": "継続火力", "t": "Gaming", "l": "中級"}, {"e": "area of effect", "j": "範囲攻撃・AoE", "t": "Gaming", "l": "中級"}, {"e": "single target", "j": "単体攻撃", "t": "Gaming", "l": "中級"}, {"e": "chain", "j": "チェーン・連鎖", "t": "Gaming", "l": "中級"}, {"e": "splash damage", "j": "スプラッシュダメージ・爆発の巻き添え", "t": "Gaming", "l": "中級"}, {"e": "friendly fire", "j": "フレンドリーファイア・同士討ち", "t": "Gaming", "l": "中級"}, {"e": "collateral", "j": "コラテラル・巻き添えダメージ", "t": "Gaming", "l": "中級"}, {"e": "line of sight", "j": "視線・ライン オブ サイト", "t": "Gaming", "l": "中級"}, {"e": "fog of war", "j": "霧・未探索エリア", "t": "Gaming", "l": "中級"}, {"e": "vision", "j": "視界・ビジョン", "t": "Gaming", "l": "中級"}, {"e": "ward", "j": "ワード・視界確保ツール", "t": "Gaming", "l": "中級"}, {"e": "scouting", "j": "スカウティング・偵察", "t": "Gaming", "l": "中級"}, {"e": "information", "j": "情報・インフォメーション", "t": "Gaming", "l": "中級"}, {"e": "map awareness", "j": "マップ認識力", "t": "Gaming", "l": "中級"}, {"e": "callout", "j": "コールアウト・位置の口頭報告", "t": "Gaming", "l": "中級"}, {"e": "shotcall", "j": "ショットコール・リーダーが指示を出す", "t": "Gaming", "l": "中級"}, {"e": "IGL", "j": "インゲームリーダー・指揮者", "t": "Gaming", "l": "中級"}, {"e": "communication", "j": "コミュニケーション・連携", "t": "Gaming", "l": "中級"}, {"e": "coordination", "j": "コーディネーション・動きの合わせ方", "t": "Gaming", "l": "中級"}, {"e": "synergy", "j": "シナジー・相乗効果", "t": "Gaming", "l": "中級"}, {"e": "draft", "j": "ドラフト・キャラ選択フェーズ", "t": "Gaming", "l": "中級"}, {"e": "pick", "j": "ピック・キャラを選ぶ", "t": "Gaming", "l": "中級"}, {"e": "ban", "j": "バン・キャラを禁止する", "t": "Gaming", "l": "中級"}, {"e": "counter pick", "j": "カウンターピック・対策キャラ選択", "t": "Gaming", "l": "中級"}, {"e": "pocket pick", "j": "ポケットピック・隠し玉キャラ", "t": "Gaming", "l": "中級"}, {"e": "comfort pick", "j": "コンフォートピック・得意キャラを選ぶ", "t": "Gaming", "l": "中級"}, {"e": "flex pick", "j": "フレックスピック・複数ポジションで使えるキャラ", "t": "Gaming", "l": "中級"}, {"e": "priority pick", "j": "プライオリティピック・優先して取るキャラ", "t": "Gaming", "l": "中級"}, {"e": "first pick", "j": "ファーストピック", "t": "Gaming", "l": "中級"}, {"e": "last pick", "j": "ラストピック", "t": "Gaming", "l": "中級"}, {"e": "blind pick", "j": "ブラインドピック・相手を見ずに選ぶ", "t": "Gaming", "l": "中級"}, {"e": "mirror match", "j": "ミラーマッチ・同キャラ対戦", "t": "Gaming", "l": "中級"}, {"e": "cheese strategy", "j": "チーズ戦略・奇策", "t": "Gaming", "l": "中級"}, {"e": "gimmick", "j": "ギミック・特殊な仕掛け", "t": "Gaming", "l": "中級"}, {"e": "all-in", "j": "オールイン・全力特攻", "t": "Gaming", "l": "中級"}, {"e": "hard engage", "j": "ハードエンゲージ・強引な開戦", "t": "Gaming", "l": "中級"}, {"e": "poke", "j": "ポーク・安全距離からのダメージ", "t": "Gaming", "l": "中級"}, {"e": "sustain fight", "j": "サステインファイト・長期戦", "t": "Gaming", "l": "中級"}, {"e": "skirmish", "j": "スカーミッシュ・小競り合い", "t": "Gaming", "l": "中級"}, {"e": "teamfight", "j": "チームファイト・集団戦", "t": "Gaming", "l": "中級"}, {"e": "objective control", "j": "オブジェクティブコントロール・目標管理", "t": "Gaming", "l": "中級"}, {"e": "vision control", "j": "ビジョンコントロール・視界管理", "t": "Gaming", "l": "中級"}, {"e": "high ground", "j": "ハイグラウンド・高所有利", "t": "Gaming", "l": "中級"}, {"e": "low ground", "j": "ローグラウンド・低地不利", "t": "Gaming", "l": "中級"}, {"e": "chokepoint", "j": "チョークポイント・通り道の要所", "t": "Gaming", "l": "中級"}, {"e": "funnel", "j": "ファネル・リソースを集中させる", "t": "Gaming", "l": "中級"}, {"e": "snowballing", "j": "スノーボーリング・有利をさらに広げる", "t": "Gaming", "l": "中級"}, {"e": "ahead", "j": "アヘッド・有利な状況", "t": "Gaming", "l": "中級"}, {"e": "behind", "j": "ビハインド・不利な状況", "t": "Gaming", "l": "中級"}, {"e": "stomp", "j": "ストンプ・圧倒的に勝つ", "t": "Gaming", "l": "中級"}, {"e": "throw", "j": "スロー・有利な状況から負ける", "t": "Gaming", "l": "中級"}, {"e": "tilting", "j": "チルト・メンタルが崩れる", "t": "Gaming", "l": "中級"}, {"e": "mental reset", "j": "メンタルリセット", "t": "Gaming", "l": "中級"}, {"e": "queue again", "j": "もう一戦する", "t": "Gaming", "l": "中級"}, {"e": "duo", "j": "デュオ・2人組", "t": "Gaming", "l": "中級"}, {"e": "stack", "j": "スタック・人数を増やす", "t": "Gaming", "l": "中級"}, {"e": "premade", "j": "プリメイド・事前に組んだチーム", "t": "Gaming", "l": "中級"}, {"e": "smurf", "j": "スマーフ・上位が低ランクで遊ぶ行為", "t": "Gaming", "l": "中級"}, {"e": "smurf account", "j": "スマーフアカウント", "t": "Gaming", "l": "中級"}, {"e": "boosting", "j": "ブースティング・代理プレイ等でのランク上げ", "t": "Gaming", "l": "中級"}, {"e": "elo hell", "j": "エロヘル・抜け出せないランク帯", "t": "Gaming", "l": "中級"}, {"e": "mmr", "j": "MMR・内部レート", "t": "Gaming", "l": "中級"}, {"e": "hidden mmr", "j": "隠しMMR", "t": "Gaming", "l": "中級"}, {"e": "calibration", "j": "キャリブレーション・初期レート測定", "t": "Gaming", "l": "中級"}, {"e": "trench", "j": "トレンチ・抜け出せない低ランク", "t": "Gaming", "l": "中級"}, {"e": "carry", "j": "キャリー・チームを引っ張る", "t": "Gaming", "l": "中級"}, {"e": "be carried", "j": "キャリーされる・引っ張ってもらう", "t": "Gaming", "l": "中級"}, {"e": "hard carry", "j": "ハードキャリー・1人で試合を決める", "t": "Gaming", "l": "中級"}, {"e": "soft carry", "j": "ソフトキャリー・補助的に引っ張る", "t": "Gaming", "l": "中級"}, {"e": "hyper carry", "j": "ハイパーキャリー・後半爆発型キャラ", "t": "Gaming", "l": "中級"}, {"e": "feeder", "j": "フィーダー・相手に経験値を献上し続ける人", "t": "Gaming", "l": "中級"}, {"e": "feeding", "j": "フィーディング・わざと負けること", "t": "Gaming", "l": "中級"}, {"e": "int", "j": "インテンショナルフィーディング・故意に負ける", "t": "Gaming", "l": "中級"}, {"e": "griefing", "j": "グリーフィング・味方の邪魔をする", "t": "Gaming", "l": "中級"}, {"e": "toxicity", "j": "トキシシティ・毒のある言動", "t": "Gaming", "l": "中級"}, {"e": "flame", "j": "フレーム・チャットで攻撃する", "t": "Gaming", "l": "中級"}, {"e": "salt", "j": "塩・負けた後の煽り（スラング）", "t": "Gaming", "l": "中級"}, {"e": "tilted", "j": "チルト・精神的に乱れた状態", "t": "Gaming", "l": "中級"}, {"e": "BM", "j": "BMする・Bad Mannersの略・挑発", "t": "Gaming", "l": "中級"}, {"e": "gg", "j": "GG・Good Gameの略", "t": "Gaming", "l": "中級"}, {"e": "gg ez", "j": "GG EZ・楽勝だったという挑発", "t": "Gaming", "l": "中級"}, {"e": "wp", "j": "WP・Well Playedの略", "t": "Gaming", "l": "中級"}, {"e": "gg wp", "j": "GG WP・Good Game Well Played", "t": "Gaming", "l": "中級"}, {"e": "ff", "j": "FF・Forfeit・投了", "t": "Gaming", "l": "中級"}, {"e": "gg ff", "j": "ゲームを終わらせようという意思表示", "t": "Gaming", "l": "中級"}, {"e": "afk", "j": "AFK・Away From Keyboard・離席中", "t": "Gaming", "l": "中級"}, {"e": "brb", "j": "BRB・Be Right Back・すぐ戻る", "t": "Gaming", "l": "中級"}, {"e": "lol", "j": "LOL・Laugh Out Loud・笑える", "t": "Gaming", "l": "中級"}, {"e": "ngl", "j": "NGL・Not Gonna Lie・正直に言うと", "t": "Gaming", "l": "中級"}, {"e": "tbh", "j": "TBH・To Be Honest・正直言って", "t": "Gaming", "l": "中級"}, {"e": "imo", "j": "IMO・In My Opinion・私の意見では", "t": "Gaming", "l": "中級"}, {"e": "nvm", "j": "NVM・Never Mind・気にしないで", "t": "Gaming", "l": "中級"}, {"e": "gl hf", "j": "GL HF・Good Luck Have Fun", "t": "Gaming", "l": "中級"}, {"e": "no cap", "j": "ノーキャップ・本当のことを言う（スラング）", "t": "Gaming", "l": "中級"}, {"e": "based", "j": "ベイスド・かっこいい・筋が通ってる（スラング）", "t": "Gaming", "l": "中級"}, {"e": "cringe", "j": "クリンジ・恥ずかしい・痛い（スラング）", "t": "Gaming", "l": "中級"}, {"e": "poggers", "j": "ポガーズ・すごい・興奮した（スラング）", "t": "Gaming", "l": "中級"}, {"e": "pog", "j": "POG・すごい（スラング）", "t": "Gaming", "l": "中級"}, {"e": "kekw", "j": "KEKW・笑える（スラング）", "t": "Gaming", "l": "中級"}, {"e": "noob", "j": "ノーブ・初心者・下手な人", "t": "Gaming", "l": "中級"}, {"e": "newbie", "j": "ニュービー・初心者", "t": "Gaming", "l": "中級"}, {"e": "pro", "j": "プロ・上手い人", "t": "Gaming", "l": "中級"}, {"e": "sweaty", "j": "スウェッティ・必死にやっている（スラング）", "t": "Gaming", "l": "中級"}, {"e": "try hard", "j": "トライハード・全力でやる人", "t": "Gaming", "l": "中級"}, {"e": "casual", "j": "カジュアル・まったりプレイヤー", "t": "Gaming", "l": "中級"}, {"e": "hardcore", "j": "ハードコア・本気プレイヤー", "t": "Gaming", "l": "中級"}, {"e": "grinder", "j": "グラインダー・周回農場する人", "t": "Gaming", "l": "中級"}, {"e": "whale", "j": "ウェール・重課金者", "t": "Gaming", "l": "中級"}, {"e": "f2p player", "j": "無課金プレイヤー", "t": "Gaming", "l": "中級"}, {"e": "pay wall", "j": "ペイウォール・課金が必要な壁", "t": "Gaming", "l": "中級"}, {"e": "power creep", "j": "パワークリープ・インフレで旧キャラが弱くなる現象", "t": "Gaming", "l": "中級"}, {"e": "broken", "j": "ブロークン・壊れ性能・強すぎる", "t": "Gaming", "l": "中級"}, {"e": "op", "j": "OP・オーバーパワード・強すぎる", "t": "Gaming", "l": "中級"}, {"e": "busted", "j": "バスト・壊れた性能", "t": "Gaming", "l": "中級"}, {"e": "sleeper pick", "j": "スリーパーピック・過小評価されている強キャラ", "t": "Gaming", "l": "中級"}, {"e": "hidden gem", "j": "隠れた良ゲーム", "t": "Gaming", "l": "中級"}, {"e": "cult classic", "j": "カルト的人気作", "t": "Gaming", "l": "中級"}, {"e": "GOAT", "j": "GOAT・Greatest Of All Time・最高", "t": "Gaming", "l": "中級"}, {"e": "legacy", "j": "レガシー・歴史的な作品・遺産", "t": "Gaming", "l": "中級"}, {"e": "nostalgia", "j": "ノスタルジア・懐かしさ", "t": "Gaming", "l": "中級"}, {"e": "replayability", "j": "リプレイアビリティ・繰り返し遊べる価値", "t": "Gaming", "l": "中級"}, {"e": "content drought", "j": "コンテンツ枯渇期", "t": "Gaming", "l": "中級"}, {"e": "live service", "j": "ライブサービス・継続的に更新されるゲーム", "t": "Gaming", "l": "中級"}, {"e": "roadmap", "j": "ロードマップ・今後の更新予定", "t": "Gaming", "l": "中級"}, {"e": "content update", "j": "コンテンツアップデート", "t": "Gaming", "l": "中級"}, {"e": "hotfix", "j": "ホットフィックス・緊急修正パッチ", "t": "Gaming", "l": "中級"}, {"e": "rollback", "j": "ロールバック・前バージョンに戻す", "t": "Gaming", "l": "中級"}, {"e": "maintenance", "j": "メンテナンス", "t": "Gaming", "l": "中級"}, {"e": "downtime", "j": "ダウンタイム・サーバー停止時間", "t": "Gaming", "l": "中級"}, {"e": "end of life", "j": "サービス終了・EOL", "t": "Gaming", "l": "中級"}, {"e": "legacy server", "j": "レガシーサーバー・旧バージョンサーバー", "t": "Gaming", "l": "中級"}, {"e": "emulator", "j": "エミュレーター", "t": "Gaming", "l": "中級"}, {"e": "ROM", "j": "ROM・ゲームデータ", "t": "Gaming", "l": "中級"}, {"e": "modding", "j": "モッディング・MODを作る行為", "t": "Gaming", "l": "中級"}, {"e": "mod", "j": "MOD・改造データ", "t": "Gaming", "l": "中級"}, {"e": "total conversion", "j": "トータルコンバージョン・全面改造MOD", "t": "Gaming", "l": "中級"}, {"e": "quality of life", "j": "QOL・快適性の向上", "t": "Gaming", "l": "中級"}, {"e": "QOL update", "j": "QOLアップデート・快適性向上パッチ", "t": "Gaming", "l": "中級"}, {"e": "quality of life improvement", "j": "快適性の改善", "t": "Gaming", "l": "中級"}, {"e": "user experience", "j": "ユーザー体験・UX", "t": "Gaming", "l": "中級"}, {"e": "UI", "j": "ユーザーインターフェース", "t": "Gaming", "l": "中級"}, {"e": "UX", "j": "ユーザーエクスペリエンス", "t": "Gaming", "l": "中級"}, {"e": "HUD customization", "j": "HUDカスタマイズ", "t": "Gaming", "l": "中級"}, {"e": "keybinding", "j": "キーバインド・キー設定", "t": "Gaming", "l": "中級"}, {"e": "remapping", "j": "リマッピング・操作の再割り当て", "t": "Gaming", "l": "中級"}, {"e": "dead zone", "j": "デッドゾーン・スティックの無反応領域", "t": "Gaming", "l": "中級"}, {"e": "input buffer", "j": "入力バッファ・先行入力", "t": "Gaming", "l": "中級"}, {"e": "negative edge", "j": "ネガティブエッジ・ボタン離し判定", "t": "Gaming", "l": "中級"}, {"e": "charge input", "j": "溜め入力", "t": "Gaming", "l": "中級"}, {"e": "motion input", "j": "コマンド入力", "t": "Gaming", "l": "中級"}, {"e": "plinking", "j": "プリンキング・入力テクニック（格ゲー）", "t": "Gaming", "l": "中級"}, {"e": "just frame", "j": "ジャストフレーム", "t": "Gaming", "l": "中級"}, {"e": "tight window", "j": "シビアな入力受付時間", "t": "Gaming", "l": "中級"}, {"e": "lenient", "j": "レニエント・入力が緩い・やさしい仕様", "t": "Gaming", "l": "中級"}, {"e": "strict", "j": "ストリクト・入力が厳しい", "t": "Gaming", "l": "中級"}, {"e": "input reading", "j": "入力読み・AIが入力を先読みする", "t": "Gaming", "l": "中級"}, {"e": "hitconfirm", "j": "ヒットコンファーム・当たったのを確認してコンボへ", "t": "Gaming", "l": "中級"}, {"e": "confirm", "j": "コンファーム・ヒット確認から繋ぐ", "t": "Gaming", "l": "中級"}, {"e": "raw", "j": "ロー・コンボなしの単発攻撃", "t": "Gaming", "l": "中級"}, {"e": "meaty", "j": "ミーティ・密着重ね攻撃", "t": "Gaming", "l": "中級"}, {"e": "shimmy", "j": "シミー・揺さぶりのステップ", "t": "Gaming", "l": "中級"}, {"e": "dash", "j": "ダッシュ・素早い移動", "t": "Gaming", "l": "中級"}, {"e": "dash cancel", "j": "ダッシュキャンセル", "t": "Gaming", "l": "中級"}, {"e": "cancel", "j": "キャンセル・行動を別の行動でキャンセル", "t": "Gaming", "l": "中級"}, {"e": "Roman cancel", "j": "ローマンキャンセル（ギルティギア）", "t": "Gaming", "l": "中級"}, {"e": "jump cancel", "j": "ジャンプキャンセル", "t": "Gaming", "l": "中級"}, {"e": "special cancel", "j": "スペシャルキャンセル", "t": "Gaming", "l": "中級"}, {"e": "super cancel", "j": "スーパーキャンセル", "t": "Gaming", "l": "中級"}, {"e": "option select", "j": "オプションセレクト・複数行動を同時処理", "t": "Gaming", "l": "中級"}, {"e": "conditioning", "j": "コンディショニング・相手の行動を条件付ける", "t": "Gaming", "l": "中級"}, {"e": "pattern recognition", "j": "パターン認識", "t": "Gaming", "l": "中級"}, {"e": "habit", "j": "ハビット・癖・習慣的な行動", "t": "Gaming", "l": "中級"}, {"e": "flowchart", "j": "フローチャート・固定パターン行動", "t": "Gaming", "l": "中級"}, {"e": "autopilot", "j": "オートパイロット・考えず動く", "t": "Gaming", "l": "中級"}, {"e": "tilt control", "j": "メンタル管理", "t": "Gaming", "l": "中級"}, {"e": "warm up", "j": "ウォームアップ・練習走", "t": "Gaming", "l": "中級"}, {"e": "lab", "j": "ラボ・練習モードで研究すること", "t": "Gaming", "l": "中級"}, {"e": "labbing", "j": "ラビング・練習モードで研究する", "t": "Gaming", "l": "中級"}, {"e": "grind", "j": "グラインド・反復練習", "t": "Gaming", "l": "中級"}, {"e": "muscle memory", "j": "筋肉記憶・体で覚える", "t": "Gaming", "l": "中級"}, {"e": "execution", "j": "エグゼキューション・コマンドの実行精度", "t": "Gaming", "l": "中級"}, {"e": "consistency", "j": "コンシステンシー・安定性", "t": "Gaming", "l": "中級"}, {"e": "clutch", "j": "クラッチ・土壇場での逆転プレイ", "t": "Gaming", "l": "中級"}, {"e": "choke", "j": "チョーク・プレッシャーで失敗する", "t": "Gaming", "l": "中級"}, {"e": "underperform", "j": "アンダーパフォーム・実力以下のプレイ", "t": "Gaming", "l": "中級"}, {"e": "overperform", "j": "オーバーパフォーム・実力以上のプレイ", "t": "Gaming", "l": "中級"}, {"e": "peak performance", "j": "ピークパフォーマンス・最高のプレイ状態", "t": "Gaming", "l": "中級"}, {"e": "on fire", "j": "オンファイア・絶好調", "t": "Gaming", "l": "中級"}, {"e": "cold", "j": "コールド・調子が出ない状態", "t": "Gaming", "l": "中級"}, {"e": "slump", "j": "スランプ", "t": "Gaming", "l": "中級"}, {"e": "plateau", "j": "プラトー・成長の頭打ち", "t": "Gaming", "l": "中級"}, {"e": "breakthrough", "j": "ブレイクスルー・成長の壁を超える", "t": "Gaming", "l": "中級"}, {"e": "interpolation", "j": "インターポレーション・フレーム補間", "t": "PC", "l": "上級"}, {"e": "extrapolation", "j": "エクストラポレーション・位置予測補間", "t": "PC", "l": "上級"}, {"e": "client-side prediction", "j": "クライアント側予測処理", "t": "PC", "l": "上級"}, {"e": "server reconciliation", "j": "サーバー側修正処理", "t": "PC", "l": "上級"}, {"e": "netcode", "j": "ネットコード・オンライン通信処理方式", "t": "PC", "l": "上級"}, {"e": "rollback netcode", "j": "ロールバックネットコード", "t": "PC", "l": "上級"}, {"e": "delay-based netcode", "j": "ディレイ式ネットコード", "t": "PC", "l": "上級"}, {"e": "determinism", "j": "決定論的処理・同一入力で同一結果", "t": "PC", "l": "上級"}, {"e": "tick rate", "j": "ティックレート・サーバー処理頻度", "t": "PC", "l": "上級"}, {"e": "packet loss", "j": "パケットロス・通信データの欠損", "t": "PC", "l": "上級"}, {"e": "jitter", "j": "ジッター・遅延のばらつき", "t": "PC", "l": "上級"}, {"e": "bufferbloat", "j": "バッファブロート・過剰バッファによる遅延", "t": "PC", "l": "上級"}, {"e": "QoS", "j": "QoS・サービス品質・通信優先制御", "t": "PC", "l": "上級"}, {"e": "port forwarding", "j": "ポートフォワーディング", "t": "PC", "l": "上級"}, {"e": "NAT traversal", "j": "NAT越え・ルーター越え接続", "t": "PC", "l": "上級"}, {"e": "peer to peer", "j": "P2P・ピアツーピア通信", "t": "PC", "l": "上級"}, {"e": "dedicated server", "j": "専用サーバー", "t": "PC", "l": "上級"}, {"e": "listen server", "j": "リッスンサーバー・プレイヤーがホストになる方式", "t": "PC", "l": "上級"}, {"e": "matchmaking algorithm", "j": "マッチメイキングアルゴリズム", "t": "PC", "l": "上級"}, {"e": "elo rating system", "j": "エロレーティングシステム", "t": "PC", "l": "上級"}, {"e": "TrueSkill", "j": "トゥルースキル・Microsoftのレーティングシステム", "t": "PC", "l": "上級"}, {"e": "SBMM", "j": "スキルベースマッチメイキング", "t": "PC", "l": "上級"}, {"e": "CBMM", "j": "接続品質ベースマッチメイキング", "t": "PC", "l": "上級"}, {"e": "anti-cheat", "j": "アンチチート・不正対策システム", "t": "PC", "l": "上級"}, {"e": "kernel-level anti-cheat", "j": "カーネルレベルアンチチート", "t": "PC", "l": "上級"}, {"e": "VAC", "j": "VAC・Valveのアンチチートシステム", "t": "PC", "l": "上級"}, {"e": "battleye", "j": "BattlEye・アンチチートソフト", "t": "PC", "l": "上級"}, {"e": "easy anti-cheat", "j": "Easy Anti-Cheat", "t": "PC", "l": "上級"}, {"e": "signature detection", "j": "シグネチャ検出・既知チートの検出", "t": "PC", "l": "上級"}, {"e": "behavioral analysis", "j": "行動解析・異常動作検知", "t": "PC", "l": "上級"}, {"e": "false positive", "j": "誤検知・正当なプレイをチートと判断", "t": "PC", "l": "上級"}, {"e": "ban wave", "j": "バンウェーブ・一斉BAN処理", "t": "PC", "l": "上級"}, {"e": "shadow ban", "j": "シャドウBAN・本人に通知しないBAN", "t": "PC", "l": "上級"}, {"e": "hardware ban", "j": "ハードウェアBAN・端末単位でのBAN", "t": "PC", "l": "上級"}, {"e": "IP ban", "j": "IPアドレスによるBAN", "t": "PC", "l": "上級"}, {"e": "exploit mitigation", "j": "エクスプロイト対策", "t": "PC", "l": "上級"}, {"e": "memory scanning", "j": "メモリスキャン・チート検出", "t": "PC", "l": "上級"}, {"e": "integrity check", "j": "整合性チェック・ファイル改ざん検出", "t": "PC", "l": "上級"}, {"e": "obfuscation", "j": "難読化・コードを解析されにくくする", "t": "PC", "l": "上級"}, {"e": "reverse engineering", "j": "リバースエンジニアリング", "t": "PC", "l": "上級"}, {"e": "decompiling", "j": "逆コンパイル", "t": "PC", "l": "上級"}, {"e": "modding API", "j": "MOD製作用公式API", "t": "PC", "l": "上級"}, {"e": "SDK", "j": "ソフトウェア開発キット", "t": "PC", "l": "上級"}, {"e": "game engine", "j": "ゲームエンジン", "t": "PC", "l": "上級"}, {"e": "Unity", "j": "ユニティ・ゲームエンジン", "t": "PC", "l": "上級"}, {"e": "Unreal Engine", "j": "アンリアルエンジン", "t": "PC", "l": "上級"}, {"e": "proprietary engine", "j": "自社開発エンジン", "t": "PC", "l": "上級"}, {"e": "middleware", "j": "ミドルウェア・補助ソフト", "t": "PC", "l": "上級"}, {"e": "physics engine", "j": "物理演算エンジン", "t": "PC", "l": "上級"}, {"e": "collision detection", "j": "衝突判定・コリジョン検出", "t": "PC", "l": "上級"}, {"e": "ragdoll physics", "j": "ラグドール物理演算", "t": "PC", "l": "上級"}, {"e": "inverse kinematics", "j": "インバースキネマティクス・逆運動学", "t": "PC", "l": "上級"}, {"e": "procedural animation", "j": "プロシージャルアニメーション", "t": "PC", "l": "上級"}, {"e": "motion capture", "j": "モーションキャプチャー", "t": "PC", "l": "上級"}, {"e": "facial animation", "j": "顔アニメーション", "t": "PC", "l": "上級"}, {"e": "lip sync", "j": "リップシンク・口の動き同期", "t": "PC", "l": "上級"}, {"e": "vertex shader", "j": "頂点シェーダー", "t": "PC", "l": "上級"}, {"e": "pixel shader", "j": "ピクセルシェーダー", "t": "PC", "l": "上級"}, {"e": "compute shader", "j": "コンピュートシェーダー", "t": "PC", "l": "上級"}, {"e": "deferred rendering", "j": "遅延レンダリング", "t": "PC", "l": "上級"}, {"e": "forward rendering", "j": "フォワードレンダリング", "t": "PC", "l": "上級"}, {"e": "global illumination", "j": "グローバルイルミネーション・大域照明", "t": "PC", "l": "上級"}, {"e": "path tracing", "j": "パストレーシング・光のシミュレーション", "t": "PC", "l": "上級"}, {"e": "lumen", "j": "ルーメン・Unreal Engineの動的照明システム", "t": "PC", "l": "上級"}, {"e": "nanite", "j": "ナナイト・Unreal Engineのポリゴン管理", "t": "PC", "l": "上級"}, {"e": "virtual texture", "j": "バーチャルテクスチャ", "t": "PC", "l": "上級"}, {"e": "streaming", "j": "ストリーミング・動的データ読み込み", "t": "PC", "l": "上級"}, {"e": "asset streaming", "j": "アセットストリーミング", "t": "PC", "l": "上級"}, {"e": "memory budget", "j": "メモリ予算・使用可能メモリ量", "t": "PC", "l": "上級"}, {"e": "garbage collection", "j": "ガベージコレクション・メモリ解放処理", "t": "PC", "l": "上級"}, {"e": "memory leak", "j": "メモリリーク・メモリが解放されない問題", "t": "PC", "l": "上級"}, {"e": "CPU-bound", "j": "CPU律速・CPUが処理のボトルネック", "t": "PC", "l": "上級"}, {"e": "GPU-bound", "j": "GPU律速・GPUが処理のボトルネック", "t": "PC", "l": "上級"}, {"e": "draw call", "j": "ドローコール・描画命令", "t": "PC", "l": "上級"}, {"e": "batching", "j": "バッチング・複数描画をまとめる最適化", "t": "PC", "l": "上級"}, {"e": "instancing", "j": "インスタンシング・同一オブジェクトの複数描画最適化", "t": "PC", "l": "上級"}, {"e": "culling", "j": "カリング・見えない部分の描画省略", "t": "PC", "l": "上級"}, {"e": "frustum culling", "j": "フラスタムカリング・視錐台外の省略", "t": "PC", "l": "上級"}, {"e": "occlusion culling", "j": "オクルージョンカリング・遮蔽された物の省略", "t": "PC", "l": "上級"}, {"e": "spatial hashing", "j": "空間ハッシング・位置の効率的な管理", "t": "PC", "l": "上級"}, {"e": "BVH", "j": "境界ボリューム階層・レイトレ用空間構造", "t": "PC", "l": "上級"}, {"e": "baked lighting", "j": "ベイクドライティング・事前計算された照明", "t": "PC", "l": "上級"}, {"e": "lightmap", "j": "ライトマップ・照明の焼き付けテクスチャ", "t": "PC", "l": "上級"}, {"e": "probe", "j": "ライトプローブ・動的照明参照点", "t": "PC", "l": "上級"}, {"e": "reflection capture", "j": "リフレクションキャプチャ・映り込み", "t": "PC", "l": "上級"}, {"e": "normal map", "j": "ノーマルマップ・擬似凹凸表現", "t": "PC", "l": "上級"}, {"e": "PBR", "j": "物理ベースレンダリング", "t": "PC", "l": "上級"}, {"e": "metalness", "j": "メタルネス・金属質感", "t": "PC", "l": "上級"}, {"e": "roughness", "j": "ラフネス・表面の粗さ", "t": "PC", "l": "上級"}, {"e": "albedo", "j": "アルベド・基本色テクスチャ", "t": "PC", "l": "上級"}, {"e": "UV mapping", "j": "UVマッピング・テクスチャ座標", "t": "PC", "l": "上級"}, {"e": "rigging", "j": "リギング・骨格設定", "t": "PC", "l": "上級"}, {"e": "skinning", "j": "スキニング・メッシュへの骨格適用", "t": "PC", "l": "上級"}, {"e": "blend shape", "j": "ブレンドシェイプ・表情変形", "t": "PC", "l": "上級"}, {"e": "LOD bias", "j": "LODバイアス・品質優先の調整", "t": "PC", "l": "上級"}, {"e": "texture streaming", "j": "テクスチャストリーミング", "t": "PC", "l": "上級"}, {"e": "mip map", "j": "ミップマップ・距離別解像度テクスチャ", "t": "PC", "l": "上級"}, {"e": "texture atlas", "j": "テクスチャアトラス・複数テクスチャの統合", "t": "PC", "l": "上級"}, {"e": "sprite sheet", "j": "スプライトシート", "t": "PC", "l": "上級"}, {"e": "particle system", "j": "パーティクルシステム・粒子演出", "t": "PC", "l": "上級"}, {"e": "VFX", "j": "視覚エフェクト", "t": "PC", "l": "上級"}, {"e": "SFX", "j": "サウンドエフェクト・効果音", "t": "PC", "l": "上級"}, {"e": "OST", "j": "オリジナルサウンドトラック", "t": "PC", "l": "上級"}, {"e": "adaptive music", "j": "アダプティブミュージック・状況連動BGM", "t": "PC", "l": "上級"}, {"e": "FMOD", "j": "FMOD・ゲーム向け音響ミドルウェア", "t": "PC", "l": "上級"}, {"e": "Wwise", "j": "Wwise・音響ミドルウェア", "t": "PC", "l": "上級"}, {"e": "occlusion audio", "j": "オクルージョンオーディオ・障害物による音の変化", "t": "PC", "l": "上級"}, {"e": "reverb zone", "j": "リバーブゾーン・空間残響エリア", "t": "PC", "l": "上級"}, {"e": "directional audio", "j": "指向性オーディオ", "t": "PC", "l": "上級"}, {"e": "dialogue system", "j": "ダイアログシステム・会話システム", "t": "PC", "l": "上級"}, {"e": "localization", "j": "ローカライゼーション・言語対応", "t": "PC", "l": "上級"}, {"e": "l10n", "j": "L10N・ローカライゼーションの略", "t": "PC", "l": "上級"}, {"e": "i18n", "j": "I18N・国際化対応の略", "t": "PC", "l": "上級"}, {"e": "string table", "j": "文字列テーブル", "t": "PC", "l": "上級"}, {"e": "voiceover", "j": "ボイスオーバー・吹き替え", "t": "PC", "l": "上級"}, {"e": "lip sync pipeline", "j": "リップシンクパイプライン", "t": "PC", "l": "上級"}, {"e": "accessibility feature", "j": "アクセシビリティ機能", "t": "PC", "l": "上級"}, {"e": "cognitive accessibility", "j": "認知的アクセシビリティ", "t": "PC", "l": "上級"}, {"e": "motor accessibility", "j": "運動機能向けアクセシビリティ", "t": "PC", "l": "上級"}, {"e": "one-handed mode", "j": "片手プレイモード", "t": "PC", "l": "上級"}, {"e": "input remapping", "j": "入力リマッピング", "t": "PC", "l": "上級"}, {"e": "subtitles", "j": "字幕", "t": "PC", "l": "上級"}, {"e": "closed captions", "j": "クローズドキャプション・効果音も含む字幕", "t": "PC", "l": "上級"}, {"e": "game design document", "j": "ゲームデザインドキュメント・GDD", "t": "Gaming", "l": "上級"}, {"e": "core loop", "j": "コアループ・基本的な行動サイクル", "t": "Gaming", "l": "上級"}, {"e": "game loop", "j": "ゲームループ・繰り返しの行動サイクル", "t": "Gaming", "l": "上級"}, {"e": "feedback loop", "j": "フィードバックループ・報酬サイクル", "t": "Gaming", "l": "上級"}, {"e": "positive feedback loop", "j": "ポジティブフィードバックループ・有利の連鎖", "t": "Gaming", "l": "上級"}, {"e": "negative feedback loop", "j": "ネガティブフィードバックループ・調整機能", "t": "Gaming", "l": "上級"}, {"e": "emergent gameplay", "j": "エマージェントゲームプレイ・想定外の面白さ", "t": "Gaming", "l": "上級"}, {"e": "systemic design", "j": "システミックデザイン・要素の相互作用設計", "t": "Gaming", "l": "上級"}, {"e": "player agency", "j": "プレイヤーエージェンシー・選択の自由度", "t": "Gaming", "l": "上級"}, {"e": "narrative agency", "j": "ナラティブエージェンシー・物語への影響力", "t": "Gaming", "l": "上級"}, {"e": "ludonarrative", "j": "ルドナラティブ・ゲームプレイと物語の関係", "t": "Gaming", "l": "上級"}, {"e": "ludonarrative dissonance", "j": "ルドナラティブディソナンス・ゲームプレイと物語の矛盾", "t": "Gaming", "l": "上級"}, {"e": "environmental storytelling", "j": "環境的ストーリーテリング", "t": "Gaming", "l": "上級"}, {"e": "show don't tell", "j": "見せることで語る手法", "t": "Gaming", "l": "上級"}, {"e": "player fantasy", "j": "プレイヤーファンタジー・なりたい像の実現", "t": "Gaming", "l": "上級"}, {"e": "power fantasy", "j": "パワーファンタジー・無双感", "t": "Gaming", "l": "上級"}, {"e": "immersion breaking", "j": "没入感を壊すこと", "t": "Gaming", "l": "上級"}, {"e": "fourth wall break", "j": "第四の壁を破る演出", "t": "Gaming", "l": "上級"}, {"e": "meta-narrative", "j": "メタナラティブ・物語のメタ構造", "t": "Gaming", "l": "上級"}, {"e": "unreliable narrator", "j": "信頼できない語り手", "t": "Gaming", "l": "上級"}, {"e": "red herring", "j": "ミスリード・偽の手がかり", "t": "Gaming", "l": "上級"}, {"e": "foreshadowing", "j": "伏線・フォアシャドウィング", "t": "Gaming", "l": "上級"}, {"e": "payoff", "j": "ペイオフ・伏線の回収", "t": "Gaming", "l": "上級"}, {"e": "chekhov's gun", "j": "チェーホフの銃・伏線の法則", "t": "Gaming", "l": "上級"}, {"e": "moral ambiguity", "j": "モラルアンビギュイティ・道徳的曖昧さ", "t": "Gaming", "l": "上級"}, {"e": "consequentialism", "j": "コンセクエンシャリズム・結果主義", "t": "Gaming", "l": "上級"}, {"e": "deontology", "j": "デオントロジー・義務論倫理", "t": "Gaming", "l": "上級"}, {"e": "trolley problem", "j": "トロッコ問題的ジレンマ", "t": "Gaming", "l": "上級"}, {"e": "systemic consequence", "j": "システム的結果・行動の影響", "t": "Gaming", "l": "上級"}, {"e": "world state", "j": "ワールドステート・世界の状態フラグ", "t": "Gaming", "l": "上級"}, {"e": "persistent world", "j": "パーシステントワールド・永続的な世界", "t": "Gaming", "l": "上級"}, {"e": "shared world", "j": "シェアードワールド・共有世界", "t": "Gaming", "l": "上級"}, {"e": "instance", "j": "インスタンス・個別化されたゾーン", "t": "Gaming", "l": "上級"}, {"e": "phasing", "j": "フェイジング・クエスト進行による世界の変化", "t": "Gaming", "l": "上級"}, {"e": "megaserver", "j": "メガサーバー・単一大規模サーバー", "t": "Gaming", "l": "上級"}, {"e": "shard", "j": "シャード・分割サーバー", "t": "Gaming", "l": "上級"}, {"e": "realm", "j": "レルム・サーバー", "t": "Gaming", "l": "上級"}, {"e": "guild war", "j": "ギルド戦争", "t": "Gaming", "l": "上級"}, {"e": "territorial control", "j": "テリトリーコントロール・陣地支配", "t": "Gaming", "l": "上級"}, {"e": "RvR", "j": "レルム対レルム・大規模PvP", "t": "Gaming", "l": "上級"}, {"e": "siege warfare", "j": "攻城戦", "t": "Gaming", "l": "上級"}, {"e": "political intrigue", "j": "政治的陰謀・勢力争い", "t": "Gaming", "l": "上級"}, {"e": "diplomacy system", "j": "外交システム", "t": "Gaming", "l": "上級"}, {"e": "alliance", "j": "アライアンス・同盟", "t": "Gaming", "l": "上級"}, {"e": "betrayal mechanic", "j": "裏切りシステム", "t": "Gaming", "l": "上級"}, {"e": "reputation system", "j": "評判システム", "t": "Gaming", "l": "上級"}, {"e": "karma system", "j": "カルマシステム・行動による評価", "t": "Gaming", "l": "上級"}, {"e": "morality meter", "j": "道徳ゲージ", "t": "Gaming", "l": "上級"}, {"e": "consequence system", "j": "選択結果システム", "t": "Gaming", "l": "上級"}, {"e": "butterfly effect", "j": "バタフライエフェクト・小さな選択の大きな影響", "t": "Gaming", "l": "上級"}, {"e": "branching narrative", "j": "分岐型ストーリー", "t": "Gaming", "l": "上級"}, {"e": "nonlinear storytelling", "j": "非線形ストーリーテリング", "t": "Gaming", "l": "上級"}, {"e": "open world design", "j": "オープンワールドデザイン", "t": "Gaming", "l": "上級"}, {"e": "handcrafted vs procedural", "j": "手作りとプロシージャルの比較", "t": "Gaming", "l": "上級"}, {"e": "level design", "j": "レベルデザイン", "t": "Gaming", "l": "上級"}, {"e": "encounter design", "j": "エンカウンターデザイン・戦闘配置設計", "t": "Gaming", "l": "上級"}, {"e": "enemy AI", "j": "敵AI", "t": "Gaming", "l": "上級"}, {"e": "behavior tree", "j": "ビヘイビアツリー・AI行動木", "t": "Gaming", "l": "上級"}, {"e": "finite state machine", "j": "有限状態機械・FSM", "t": "Gaming", "l": "上級"}, {"e": "utility AI", "j": "ユーティリティAI・評価関数ベースAI", "t": "Gaming", "l": "上級"}, {"e": "pathfinding", "j": "パスファインディング・経路探索", "t": "Gaming", "l": "上級"}, {"e": "A* algorithm", "j": "A*アルゴリズム・最短経路探索", "t": "Gaming", "l": "上級"}, {"e": "navmesh", "j": "ナブメッシュ・AI移動可能領域", "t": "Gaming", "l": "上級"}, {"e": "dynamic obstacle", "j": "動的障害物", "t": "Gaming", "l": "上級"}, {"e": "aggro radius", "j": "アグロ半径・敵の感知範囲", "t": "Gaming", "l": "上級"}, {"e": "patrol route", "j": "パトロールルート", "t": "Gaming", "l": "上級"}, {"e": "idle state", "j": "アイドル状態・何もしていない状態", "t": "Gaming", "l": "上級"}, {"e": "alert state", "j": "警戒状態", "t": "Gaming", "l": "上級"}, {"e": "combat state", "j": "戦闘状態", "t": "Gaming", "l": "上級"}, {"e": "flee state", "j": "逃走状態", "t": "Gaming", "l": "上級"}, {"e": "callout behavior", "j": "仲間呼び行動", "t": "Gaming", "l": "上級"}, {"e": "pack behavior", "j": "集団行動AI", "t": "Gaming", "l": "上級"}, {"e": "flanking AI", "j": "側面攻撃AI", "t": "Gaming", "l": "上級"}, {"e": "cover system", "j": "カバーシステム・物陰に隠れる", "t": "Gaming", "l": "上級"}, {"e": "destructible environment", "j": "破壊可能環境", "t": "Gaming", "l": "上級"}, {"e": "dynamic weather", "j": "ダイナミック天候システム", "t": "Gaming", "l": "上級"}, {"e": "day-night cycle", "j": "昼夜サイクル", "t": "Gaming", "l": "上級"}, {"e": "ecosystem simulation", "j": "生態系シミュレーション", "t": "Gaming", "l": "上級"}, {"e": "radiant AI", "j": "ラジアントAI・Bethesdaの自律AI", "t": "Gaming", "l": "上級"}, {"e": "nemesis system", "j": "ネメシスシステム・個別化された敵", "t": "Gaming", "l": "上級"}, {"e": "director AI", "j": "ディレクターAI・難易度を調整するAI", "t": "Gaming", "l": "上級"}, {"e": "adaptive difficulty", "j": "アダプティブディフィカルティ・動的難易度調整", "t": "Gaming", "l": "上級"}, {"e": "rubber band AI", "j": "ラバーバンドAI・プレイヤーに追いつくAI", "t": "Gaming", "l": "上級"}, {"e": "machine learning in games", "j": "ゲームにおける機械学習", "t": "Gaming", "l": "上級"}, {"e": "neural network opponent", "j": "ニューラルネットワーク対戦相手", "t": "Gaming", "l": "上級"}, {"e": "reinforcement learning", "j": "強化学習", "t": "Gaming", "l": "上級"}, {"e": "procedural boss", "j": "プロシージャルボス・自動生成ボス", "t": "Gaming", "l": "上級"}, {"e": "roguelike system design", "j": "ローグライクシステム設計", "t": "Gaming", "l": "上級"}, {"e": "meta progression", "j": "メタ進行・ラン間での成長", "t": "Gaming", "l": "上級"}, {"e": "run modifier", "j": "ランモディファイア・周回ごとの変化要素", "t": "Gaming", "l": "上級"}, {"e": "curse", "j": "カース・デメリット要素", "t": "Gaming", "l": "上級"}, {"e": "boon", "j": "ブーン・恩恵・ボーナス要素", "t": "Gaming", "l": "上級"}, {"e": "artifact", "j": "アーティファクト・ランに影響するアイテム", "t": "Gaming", "l": "上級"}, {"e": "relic", "j": "レリック・パッシブ効果アイテム", "t": "Gaming", "l": "上級"}, {"e": "synergy hunting", "j": "シナジー探し", "t": "Gaming", "l": "上級"}, {"e": "build enabling", "j": "ビルド成立のための素材集め", "t": "Gaming", "l": "上級"}, {"e": "broken build", "j": "壊れビルド・極端に強い構成", "t": "Gaming", "l": "上級"}, {"e": "challenge run", "j": "チャレンジラン・制限プレイ", "t": "Gaming", "l": "上級"}, {"e": "nuzlocke", "j": "ナズロック・ポケモンの縛りプレイ", "t": "Gaming", "l": "上級"}, {"e": "self-imposed challenge", "j": "自己縛りプレイ", "t": "Gaming", "l": "上級"}, {"e": "deathless run", "j": "ノーデスクリア", "t": "Gaming", "l": "上級"}, {"e": "hitless", "j": "ノーダメージクリア", "t": "Gaming", "l": "上級"}, {"e": "pacifist run", "j": "パシフィストラン・非戦闘クリア", "t": "Gaming", "l": "上級"}, {"e": "genocide run", "j": "ジェノサイドラン・全敵撃破クリア", "t": "Gaming", "l": "上級"}, {"e": "any%", "j": "エニーパーセント・最速クリア条件", "t": "Gaming", "l": "上級"}, {"e": "100%", "j": "100%・完全コンプリート条件", "t": "Gaming", "l": "上級"}, {"e": "glitchless", "j": "グリッチレス・バグ技なし縛り", "t": "Gaming", "l": "上級"}, {"e": "low%", "j": "低達成率クリア・最小限プレイ", "t": "Gaming", "l": "上級"}, {"e": "category extension", "j": "カテゴリ拡張・非公式縛り", "t": "Gaming", "l": "上級"}, {"e": "world record", "j": "世界記録・WR", "t": "Gaming", "l": "上級"}, {"e": "personal best", "j": "個人ベスト・PB", "t": "Gaming", "l": "上級"}, {"e": "splits", "j": "スプリット・区間タイム", "t": "Gaming", "l": "上級"}, {"e": "reset", "j": "リセット・記録が出ないと判断して最初から", "t": "Gaming", "l": "上級"}, {"e": "livesplit", "j": "LiveSplit・タイムアタック計測ソフト", "t": "Gaming", "l": "上級"}, {"e": "RNG manipulation", "j": "乱数操作", "t": "Gaming", "l": "上級"}, {"e": "consistent strat", "j": "安定した戦略", "t": "Gaming", "l": "上級"}, {"e": "risky strat", "j": "リスクある戦略", "t": "Gaming", "l": "上級"}, {"e": "time save", "j": "タイム短縮", "t": "Gaming", "l": "上級"}, {"e": "time loss", "j": "タイムロス", "t": "Gaming", "l": "上級"}, {"e": "skip", "j": "スキップ・区間飛ばし", "t": "Gaming", "l": "上級"}, {"e": "wrong warp", "j": "ワープ技・意図しないワープ", "t": "Gaming", "l": "上級"}, {"e": "out of bounds", "j": "OOB・マップ外への脱出", "t": "Gaming", "l": "上級"}, {"e": "clipping", "j": "クリッピング・壁抜け", "t": "Gaming", "l": "上級"}, {"e": "sequence break", "j": "シークエンスブレイク・攻略順の逆転", "t": "Gaming", "l": "上級"}, {"e": "storage", "j": "ストレージグリッチ・技の保持", "t": "Gaming", "l": "上級"}, {"e": "superslide", "j": "スーパースライド（ゼルダ系バグ技）", "t": "Gaming", "l": "上級"}, {"e": "wrong warp", "j": "ウロングワープ・意図しない転送", "t": "Gaming", "l": "上級"}, {"e": "deathwarp", "j": "デスワープ・死亡を利用した移動", "t": "Gaming", "l": "上級"}, {"e": "door storage", "j": "ドアストレージ", "t": "Gaming", "l": "上級"}, {"e": "item duplication", "j": "アイテム複製バグ", "t": "Gaming", "l": "上級"}, {"e": "infinite jump", "j": "無限ジャンプバグ", "t": "Gaming", "l": "上級"}, {"e": "movement tech", "j": "移動テクニック", "t": "Gaming", "l": "上級"}, {"e": "bunny hop", "j": "バニーホップ・ジャンプ移動加速", "t": "Gaming", "l": "上級"}, {"e": "strafe jumping", "j": "ストレイフジャンプ・斜め移動加速", "t": "Gaming", "l": "上級"}, {"e": "air strafing", "j": "エアストレイフィング", "t": "Gaming", "l": "上級"}, {"e": "wavedash", "j": "ウェーブダッシュ", "t": "Gaming", "l": "上級"}, {"e": "waveland", "j": "ウェーブランド", "t": "Gaming", "l": "上級"}, {"e": "L-cancel", "j": "Lキャンセル", "t": "Gaming", "l": "上級"}, {"e": "shield drop", "j": "シールドドロップ", "t": "Gaming", "l": "上級"}, {"e": "tech chase", "j": "テックチェイス", "t": "Gaming", "l": "上級"}, {"e": "ledge cancel", "j": "崖キャンセル", "t": "Gaming", "l": "上級"}, {"e": "edge guard", "j": "エッジガード・復帰阻止", "t": "Gaming", "l": "上級"}, {"e": "two frame", "j": "2フレーム攻撃・崖上がりに合わせた攻撃", "t": "Gaming", "l": "上級"}, {"e": "ledge trump", "j": "崖奪い", "t": "Gaming", "l": "上級"}, {"e": "stage control", "j": "ステージコントロール", "t": "Gaming", "l": "上級"}, {"e": "stage spike", "j": "ステージスパイク・ステージに叩きつけ", "t": "Gaming", "l": "上級"}, {"e": "wall tech", "j": "壁テック", "t": "Gaming", "l": "上級"}, {"e": "ceiling tech", "j": "天井テック", "t": "Gaming", "l": "上級"}, {"e": "di mixup", "j": "ディアイ択", "t": "Gaming", "l": "上級"}, {"e": "sdi", "j": "スマッシュDI・連続ヒット中の回避操作", "t": "Gaming", "l": "上級"}, {"e": "cc", "j": "クラウチキャンセル・しゃがみによるダメージ軽減", "t": "Gaming", "l": "上級"}, {"e": "amsah tech", "j": "アムサテック", "t": "Gaming", "l": "上級"}, {"e": "winkback", "j": "ウィンクバック", "t": "Gaming", "l": "上級"}, {"e": "crouch cancel", "j": "クラウチキャンセル", "t": "Gaming", "l": "上級"}, {"e": "jab reset", "j": "ジャブリセット", "t": "Gaming", "l": "上級"}, {"e": "triplicity", "j": "トリプリシティ・三択", "t": "Gaming", "l": "上級"}, {"e": "50/50", "j": "フィフティフィフティ・二択", "t": "Gaming", "l": "上級"}, {"e": "coin flip", "j": "コインフリップ・運任せの択", "t": "Gaming", "l": "上級"}, {"e": "high risk high reward", "j": "ハイリスクハイリターン", "t": "Gaming", "l": "上級"}, {"e": "safe play", "j": "セーフプレイ・安全策", "t": "Gaming", "l": "上級"}, {"e": "greedy play", "j": "グリーディプレイ・欲張りな行動", "t": "Gaming", "l": "上級"}, {"e": "respect", "j": "リスペクト・相手を警戒して行動を控える", "t": "Gaming", "l": "上級"}, {"e": "disrespect", "j": "ディスリスペクト・相手を舐めた行動", "t": "Gaming", "l": "上級"}, {"e": "conditioning check", "j": "コンディショニングチェック・条件付けの確認", "t": "Gaming", "l": "上級"}, {"e": "knowledge check", "j": "ナレッジチェック・知識があるかの試験", "t": "Gaming", "l": "上級"}, {"e": "tournament legal", "j": "大会使用可能", "t": "Gaming", "l": "上級"}, {"e": "banned in tournament", "j": "大会禁止", "t": "Gaming", "l": "上級"}, {"e": "ruleset", "j": "ルールセット・大会規定", "t": "Gaming", "l": "上級"}, {"e": "gentlemen's agreement", "j": "紳士協定・暗黙のルール", "t": "Gaming", "l": "上級"}, {"e": "stagestriking", "j": "ステージ選択プロセス", "t": "Gaming", "l": "上級"}, {"e": "counterpick stage", "j": "カウンターピックステージ", "t": "Gaming", "l": "上級"}, {"e": "starter stage", "j": "スターターステージ", "t": "Gaming", "l": "上級"}, {"e": "neutral stage", "j": "ニュートラルステージ", "t": "Gaming", "l": "上級"}, {"e": "stalling", "j": "ストーリング・時間稼ぎ行為", "t": "Gaming", "l": "上級"}, {"e": "planking", "j": "プランキング・崖にぶら下がり続ける行為", "t": "Gaming", "l": "上級"}, {"e": "wobbling", "j": "ウォブリング・グラブからの連続技", "t": "Gaming", "l": "上級"}, {"e": "mashing", "j": "マッシング・ボタン連打", "t": "Gaming", "l": "上級"}, {"e": "DI out", "j": "DIアウト・吹き飛びを横に逃げる", "t": "Gaming", "l": "上級"}, {"e": "DI in", "j": "DIイン・吹き飛びを内側に逃げる", "t": "Gaming", "l": "上級"}, {"e": "percentage", "j": "パーセンテージ・蓄積ダメージ", "t": "Gaming", "l": "上級"}, {"e": "stock", "j": "ストック・残機", "t": "Gaming", "l": "上級"}, {"e": "stock lead", "j": "ストックリード・残機差", "t": "Gaming", "l": "上級"}, {"e": "kill confirm", "j": "キルコンファーム・撃墜確定コンボ", "t": "Gaming", "l": "上級"}, {"e": "kill setup", "j": "キルセットアップ・撃墜準備", "t": "Gaming", "l": "上級"}, {"e": "edgeguard situation", "j": "復帰阻止の状況", "t": "Gaming", "l": "上級"}, {"e": "offstage", "j": "オフステージ・ステージ外", "t": "Gaming", "l": "上級"}, {"e": "two-stock", "j": "2ストック差", "t": "Gaming", "l": "上級"}, {"e": "last stock", "j": "ラストストック・最後の1機", "t": "Gaming", "l": "上級"}, {"e": "last stock situation", "j": "最終局面", "t": "Gaming", "l": "上級"}, {"e": "time out", "j": "タイムアップ・時間切れによる勝敗判定", "t": "Gaming", "l": "上級"}, {"e": "sudden death", "j": "サドンデス・同点後の決着戦", "t": "Gaming", "l": "上級"}, {"e": "bo3", "j": "ベスト・オブ・3・3本勝負", "t": "Gaming", "l": "上級"}, {"e": "bo5", "j": "ベスト・オブ・5・5本勝負", "t": "Gaming", "l": "上級"}, {"e": "double elimination", "j": "ダブルエリミネーション・敗者復活あり形式", "t": "Gaming", "l": "上級"}, {"e": "single elimination", "j": "シングルエリミネーション・一発勝負トーナメント", "t": "Gaming", "l": "上級"}, {"e": "round robin", "j": "ラウンドロビン・総当たり戦", "t": "Gaming", "l": "上級"}, {"e": "swiss system", "j": "スイス式トーナメント", "t": "Gaming", "l": "上級"}, {"e": "bracket", "j": "ブラケット・トーナメント表", "t": "Gaming", "l": "上級"}, {"e": "seeding", "j": "シーディング・シード順決定", "t": "Gaming", "l": "上級"}, {"e": "upset", "j": "アップセット・番狂わせ", "t": "Gaming", "l": "上級"}, {"e": "top cut", "j": "トップカット・上位進出", "t": "Gaming", "l": "上級"}, {"e": "top 8", "j": "トップ8・上位8名", "t": "Gaming", "l": "上級"}, {"e": "grand finals", "j": "グランドファイナル・決勝", "t": "Gaming", "l": "上級"}, {"e": "winners side", "j": "ウィナーズサイド・勝者側ブラケット", "t": "Gaming", "l": "上級"}, {"e": "losers side", "j": "ルーザーズサイド・敗者側ブラケット", "t": "Gaming", "l": "上級"}, {"e": "bracket reset", "j": "ブラケットリセット・ルーザーズ側優勝者が仕切り直す", "t": "Gaming", "l": "上級"}, {"e": "stage", "j": "ステージ・大会会場", "t": "Gaming", "l": "上級"}, {"e": "venue", "j": "ベニュー・開催場所", "t": "Gaming", "l": "上級"}, {"e": "LAN tournament", "j": "ラントーナメント・オフライン大会", "t": "Gaming", "l": "上級"}, {"e": "online tournament", "j": "オンライントーナメント", "t": "Gaming", "l": "上級"}, {"e": "major", "j": "メジャー・大型大会", "t": "Gaming", "l": "上級"}, {"e": "regional", "j": "リージョナル・地域大会", "t": "Gaming", "l": "上級"}, {"e": "local", "j": "ローカル・地元の小大会", "t": "Gaming", "l": "上級"}, {"e": "weekly", "j": "ウィークリー・毎週開催の大会", "t": "Gaming", "l": "上級"}, {"e": "monthly", "j": "マンスリー・毎月開催の大会", "t": "Gaming", "l": "上級"}, {"e": "circuit", "j": "サーキット・ポイント制シーズン", "t": "Gaming", "l": "上級"}, {"e": "qualification", "j": "クオリフィケーション・予選", "t": "Gaming", "l": "上級"}, {"e": "invitational", "j": "インビテーショナル・招待制大会", "t": "Gaming", "l": "上級"}, {"e": "open bracket", "j": "オープンブラケット・誰でも参加可能な枠", "t": "Gaming", "l": "上級"}, {"e": "pot bonus", "j": "ポットボーナス・賞金上乗せ", "t": "Gaming", "l": "上級"}, {"e": "prize pool", "j": "プライズプール・総賞金", "t": "Gaming", "l": "上級"}, {"e": "sponsor", "j": "スポンサー", "t": "Gaming", "l": "上級"}, {"e": "org", "j": "オーガニゼーション・プロチーム組織", "t": "Gaming", "l": "上級"}, {"e": "esport athlete", "j": "eスポーツ選手", "t": "Gaming", "l": "上級"}, {"e": "content creator", "j": "コンテンツクリエイター", "t": "Gaming", "l": "上級"}, {"e": "influencer", "j": "インフルエンサー", "t": "Gaming", "l": "上級"}, {"e": "streamer", "j": "ストリーマー・配信者", "t": "Gaming", "l": "上級"}, {"e": "variety streamer", "j": "バラエティストリーマー", "t": "Gaming", "l": "上級"}, {"e": "dedicated streamer", "j": "特化配信者", "t": "Gaming", "l": "上級"}, {"e": "viewers", "j": "視聴者", "t": "Gaming", "l": "上級"}, {"e": "subscriber", "j": "サブスクライバー・定期購読者", "t": "Gaming", "l": "上級"}, {"e": "donation", "j": "ドネーション・配信への投げ銭", "t": "Gaming", "l": "上級"}, {"e": "bits", "j": "ビッツ・Twitchの投げ銭通貨", "t": "Gaming", "l": "上級"}, {"e": "superchat", "j": "スーパーチャット・YouTubeの投げ銭", "t": "Gaming", "l": "上級"}, {"e": "raid", "j": "レイド・他配信者へ視聴者を送る", "t": "Gaming", "l": "上級"}, {"e": "host", "j": "ホスト・他配信者を自チャンネルで放映", "t": "Gaming", "l": "上級"}, {"e": "shoutout", "j": "シャウトアウト・他の人を紹介する", "t": "Gaming", "l": "上級"}, {"e": "collab", "j": "コラボ・コラボレーション配信", "t": "Gaming", "l": "上級"}, {"e": "subathon", "j": "サブアソン・登録者数でドラマ変化配信", "t": "Gaming", "l": "上級"}, {"e": "charity stream", "j": "チャリティ配信", "t": "Gaming", "l": "上級"}, {"e": "game jam", "j": "ゲームジャム・短期間でゲームを作るイベント", "t": "Gaming", "l": "上級"}, {"e": "indie dev", "j": "インディー開発者", "t": "Gaming", "l": "上級"}, {"e": "AA game", "j": "ダブルA・中規模ゲーム", "t": "Gaming", "l": "上級"}, {"e": "AAA game", "j": "トリプルA・大手スタジオ大作", "t": "Gaming", "l": "上級"}, {"e": "crunch", "j": "クランチ・過剰残業", "t": "Gaming", "l": "上級"}, {"e": "gold master", "j": "ゴールドマスター・開発完了状態", "t": "Gaming", "l": "上級"}, {"e": "gold", "j": "ゴールド・製品版として完成した状態", "t": "Gaming", "l": "上級"}, {"e": "cert", "j": "サート・審査通過", "t": "Gaming", "l": "上級"}, {"e": "certification", "j": "サーティフィケーション・プラットフォーム審査", "t": "Gaming", "l": "上級"}, {"e": "submission", "j": "サブミッション・審査提出", "t": "Gaming", "l": "上級"}, {"e": "post-launch support", "j": "発売後のサポート", "t": "Gaming", "l": "上級"}, {"e": "player retention", "j": "プレイヤー維持率", "t": "Gaming", "l": "上級"}, {"e": "churn rate", "j": "チャーンレート・離脱率", "t": "Gaming", "l": "上級"}, {"e": "daily active users", "j": "デイリーアクティブユーザー・DAU", "t": "Gaming", "l": "上級"}, {"e": "monthly active users", "j": "マンスリーアクティブユーザー・MAU", "t": "Gaming", "l": "上級"}, {"e": "session length", "j": "セッション時間・1回あたりのプレイ時間", "t": "Gaming", "l": "上級"}, {"e": "engagement", "j": "エンゲージメント・関与度", "t": "Gaming", "l": "上級"}, {"e": "monetization strategy", "j": "マネタイズ戦略", "t": "Gaming", "l": "上級"}, {"e": "ARPU", "j": "一人あたり平均売上", "t": "Gaming", "l": "上級"}, {"e": "ARPPU", "j": "課金者一人あたり平均売上", "t": "Gaming", "l": "上級"}, {"e": "conversion rate", "j": "転換率・無料→有料の割合", "t": "Gaming", "l": "上級"}];
 
-let allWords = [];
-let filteredWords = [];
+let allWords = ALL_WORDS;
+let filteredWords = [...allWords];
 let currentIndex = 0;
 let isPlaying = false;
 let isShuffle = false;
 let currentLevel = '全て';
-let intervalTimer = null;
-let speechSynth = window.speechSynthesis;
+let currentTag = '全て';
 let phaseTimer = null;
 let intervalSec = 4;
-let phase = 'english';
-
-function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-  return lines.slice(1).map(line => {
-    const cols = [];
-    let cur = '', inQ = false;
-    for (let c of line) {
-      if (c === '"') { inQ = !inQ; }
-      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += c; }
-    }
-    cols.push(cur.trim());
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = (cols[i] || '').replace(/"/g, '').trim());
-    return obj;
-  }).filter(r => r['英語'] || r['English'] || r[headers[0]]);
-}
-
-function getField(word, keys) {
-  for (let k of keys) { if (word[k]) return word[k]; }
-  return '';
-}
+let synth = window.speechSynthesis;
 
 function applyFilter() {
-  filteredWords = currentLevel === '全て'
-    ? [...allWords]
-    : allWords.filter(w => {
-        const lv = getField(w, ['レベル', 'Level', 'level']);
-        return lv === currentLevel;
-      });
+  filteredWords = allWords.filter(w => {
+    const lvOk = currentLevel === '全て' || w.l === currentLevel;
+    const tagOk = currentTag === '全て' || w.t === currentTag;
+    return lvOk && tagOk;
+  });
   if (isShuffle) shuffle(filteredWords);
   currentIndex = 0;
+  updateCounter();
 }
 
 function shuffle(arr) {
@@ -345,68 +218,56 @@ function shuffle(arr) {
   }
 }
 
+function updateCounter() {
+  document.getElementById('counter').textContent = filteredWords.length > 0
+    ? (currentIndex + 1) + ' / ' + filteredWords.length
+    : '0 / 0';
+  const pct = filteredWords.length > 0 ? ((currentIndex + 1) / filteredWords.length * 100) : 0;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+function updateCard(word) {
+  document.getElementById('eng-text').textContent = word.e;
+  document.getElementById('jpn-text').textContent = word.j;
+  document.getElementById('word-tag').textContent = word.t + ' / ' + word.l;
+  document.getElementById('jpn-text').className = 'japanese hidden';
+  document.getElementById('indicator').classList.remove('speaking');
+  updateCounter();
+}
+
 function speak(text, lang, onEnd) {
-  speechSynth.cancel();
+  synth.cancel();
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = lang;
   utt.rate = 0.9;
   utt.onend = onEnd || null;
-  speechSynth.speak(utt);
-}
-
-function updateCard(word) {
-  const eng = document.getElementById('eng-text');
-  const jpn = document.getElementById('jpn-text');
-  const tag = document.getElementById('word-tag');
-  const counter = document.getElementById('counter');
-  const progress = document.getElementById('progress');
-  const indicator = document.getElementById('indicator');
-
-  if (!eng) return;
-
-  const engText = getField(word, ['英語', 'English', 'english']);
-  const jpnText = getField(word, ['日本語', 'Japanese', 'japanese']);
-  const tagText = getField(word, ['タグ', 'Tag', 'tag']);
-
-  eng.textContent = engText;
-  jpn.textContent = jpnText;
-  if (tag) tag.textContent = tagText;
-  if (counter) counter.textContent = `${currentIndex + 1} / ${filteredWords.length}`;
-  if (progress) progress.style.width = `${((currentIndex + 1) / filteredWords.length) * 100}%`;
-
-  jpn.classList.remove('visible');
-  jpn.classList.add('hidden');
-  indicator.classList.remove('speaking');
+  utt.onerror = onEnd || null;
+  synth.speak(utt);
 }
 
 function playPhases(word) {
   clearTimeout(phaseTimer);
-  const eng = document.getElementById('eng-text');
-  const jpn = document.getElementById('jpn-text');
   const indicator = document.getElementById('indicator');
+  const jpn = document.getElementById('jpn-text');
   const status = document.getElementById('status');
 
-  const engText = getField(word, ['英語', 'English', 'english']);
-  const jpnText = getField(word, ['日本語', 'Japanese', 'japanese']);
-
-  if (status) status.textContent = 'SPEAKING EN...';
   indicator.classList.add('speaking');
+  if (status) status.textContent = 'EN...';
 
-  speak(engText, 'en-US', () => {
+  speak(word.e, 'en-US', () => {
     indicator.classList.remove('speaking');
     phaseTimer = setTimeout(() => {
       if (!isPlaying) return;
-      jpn.classList.remove('hidden');
-      jpn.classList.add('visible');
-      if (status) status.textContent = 'SPEAKING JP...';
+      jpn.className = 'japanese visible';
       indicator.classList.add('speaking');
-      speak(jpnText, 'ja-JP', () => {
+      if (status) status.textContent = 'JP...';
+      speak(word.j, 'ja-JP', () => {
         indicator.classList.remove('speaking');
         if (status) status.textContent = 'NEXT...';
         phaseTimer = setTimeout(() => {
           if (!isPlaying) return;
           nextWord();
-        }, intervalSec * 600);
+        }, intervalSec * 500);
       });
     }, intervalSec * 400);
   });
@@ -415,100 +276,12 @@ function playPhases(word) {
 function nextWord() {
   if (filteredWords.length === 0) return;
   currentIndex = (currentIndex + 1) % filteredWords.length;
-  const word = filteredWords[currentIndex];
-  updateCard(word);
-  if (isPlaying) playPhases(word);
-}
-
-function startPlay() {
-  if (filteredWords.length === 0) return;
-  isPlaying = true;
-  const playBtn = document.getElementById('play-btn');
-  if (playBtn) { playBtn.textContent = '⏸ PAUSE'; playBtn.classList.add('playing'); }
-  const word = filteredWords[currentIndex];
-  updateCard(word);
-  playPhases(word);
-}
-
-function stopPlay() {
-  isPlaying = false;
-  speechSynth.cancel();
-  clearTimeout(phaseTimer);
-  const playBtn = document.getElementById('play-btn');
-  if (playBtn) { playBtn.textContent = '▶ PLAY'; playBtn.classList.remove('playing'); }
-  const status = document.getElementById('status');
-  if (status) status.textContent = 'PAUSED';
-  const indicator = document.getElementById('indicator');
-  if (indicator) indicator.classList.remove('speaking');
-}
-
-function buildUI() {
-  const app = document.getElementById('app');
-  const levels = ['全て', ...new Set(allWords.map(w => getField(w, ['レベル', 'Level', 'level'])).filter(Boolean))];
-
-  applyFilter();
-
-  app.innerHTML = `
-    <div class="header">
-      <div class="logo">GAME VOCAB</div>
-      <div class="counter" id="counter">1 / ${filteredWords.length}</div>
-    </div>
-
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress" style="width: ${filteredWords.length ? (1/filteredWords.length*100) : 0}%"></div>
-    </div>
-
-    <div class="card">
-      <div class="tag" id="word-tag">--</div>
-      <div class="english" id="eng-text">${filteredWords[0] ? getField(filteredWords[0], ['英語','English','english']) : '--'}</div>
-      <div class="japanese hidden" id="jpn-text">${filteredWords[0] ? getField(filteredWords[0], ['日本語','Japanese','japanese']) : '--'}</div>
-      <div class="speaking-indicator" id="indicator">
-        <div class="bar" style="height:4px"></div>
-        <div class="bar" style="height:4px"></div>
-        <div class="bar" style="height:4px"></div>
-        <div class="bar" style="height:4px"></div>
-        <div class="bar" style="height:4px"></div>
-      </div>
-    </div>
-
-    <div class="controls">
-      <div class="control-row">
-        <button class="btn btn-play" id="play-btn" onclick="togglePlay()">▶ PLAY</button>
-        <button class="btn" onclick="prevWord()">◀ PREV</button>
-        <button class="btn" onclick="nextWord()">NEXT ▶</button>
-        <button class="btn" id="shuffle-btn" onclick="toggleShuffle()">⇄ SHUFFLE</button>
-      </div>
-
-      <div class="control-row">
-        <span class="label">LEVEL</span>
-        <div class="btn-group" id="level-btns">
-          ${levels.map(lv => `<button class="btn ${lv === currentLevel ? 'active' : ''}" onclick="setLevel('${lv}')">${lv}</button>`).join('')}
-        </div>
-      </div>
-
-      <div class="control-row">
-        <span class="label">SPEED</span>
-        <div class="speed-control">
-          <span style="font-size:10px;color:var(--muted);font-family:monospace">遅</span>
-          <input type="range" id="speed-range" min="2" max="8" step="0.5" value="${intervalSec}" oninput="setSpeed(this.value)">
-          <span style="font-size:10px;color:var(--muted);font-family:monospace">速</span>
-          <span class="speed-val" id="speed-val">${intervalSec}s</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="status" id="status">READY</div>
-  `;
-
-  if (filteredWords[0]) updateCard(filteredWords[0]);
-}
-
-function togglePlay() {
-  if (isPlaying) { stopPlay(); } else { startPlay(); }
+  updateCard(filteredWords[currentIndex]);
+  if (isPlaying) playPhases(filteredWords[currentIndex]);
 }
 
 function prevWord() {
-  speechSynth.cancel();
+  synth.cancel();
   clearTimeout(phaseTimer);
   if (filteredWords.length === 0) return;
   currentIndex = (currentIndex - 1 + filteredWords.length) % filteredWords.length;
@@ -516,48 +289,95 @@ function prevWord() {
   if (isPlaying) playPhases(filteredWords[currentIndex]);
 }
 
+function startPlay() {
+  if (filteredWords.length === 0) return;
+  isPlaying = true;
+  const btn = document.getElementById('play-btn');
+  btn.innerHTML = '&#9646;&#9646; PAUSE';
+  btn.classList.add('playing');
+  updateCard(filteredWords[currentIndex]);
+  playPhases(filteredWords[currentIndex]);
+}
+
+function stopPlay() {
+  isPlaying = false;
+  synth.cancel();
+  clearTimeout(phaseTimer);
+  const btn = document.getElementById('play-btn');
+  btn.innerHTML = '&#9654; PLAY';
+  btn.classList.remove('playing');
+  document.getElementById('status').textContent = 'PAUSED';
+  document.getElementById('indicator').classList.remove('speaking');
+}
+
+function togglePlay() {
+  if (isPlaying) stopPlay(); else startPlay();
+}
+
+function toggleShuffle() {
+  isShuffle = !isShuffle;
+  document.getElementById('shuffle-btn').classList.toggle('shuffle-on', isShuffle);
+  applyFilter();
+  if (filteredWords[currentIndex]) updateCard(filteredWords[currentIndex]);
+}
+
 function setLevel(lv) {
   currentLevel = lv;
   const wasPlaying = isPlaying;
   stopPlay();
   applyFilter();
-  const btns = document.querySelectorAll('#level-btns .btn');
-  const levels = ['全て', ...new Set(allWords.map(w => getField(w, ['レベル', 'Level', 'level'])).filter(Boolean))];
-  btns.forEach((b, i) => { b.classList.toggle('active', levels[i] === lv); });
-  document.getElementById('counter').textContent = `1 / ${filteredWords.length}`;
+  document.querySelectorAll('#level-btns .btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.val === lv);
+  });
   if (filteredWords[0]) updateCard(filteredWords[0]);
   if (wasPlaying) startPlay();
 }
 
-function toggleShuffle() {
-  isShuffle = !isShuffle;
-  const btn = document.getElementById('shuffle-btn');
-  btn.classList.toggle('shuffle-on', isShuffle);
-  if (isShuffle) shuffle(filteredWords);
-  else applyFilter();
-  currentIndex = 0;
+function setTag(tag) {
+  currentTag = tag;
+  const wasPlaying = isPlaying;
+  stopPlay();
+  applyFilter();
+  document.querySelectorAll('#tag-btns .btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.val === tag);
+  });
   if (filteredWords[0]) updateCard(filteredWords[0]);
+  if (wasPlaying) startPlay();
 }
 
 function setSpeed(val) {
   intervalSec = parseFloat(val);
-  document.getElementById('speed-val').textContent = `${val}s`;
+  document.getElementById('speed-val').textContent = val + 's';
 }
 
-fetch(SHEET_URL)
-  .then(r => r.text())
-  .then(text => {
-    allWords = parseCSV(text);
-    if (allWords.length === 0) throw new Error('No data');
-    buildUI();
-  })
-  .catch(err => {
-    document.getElementById('app').innerHTML = `
-      <div style="text-align:center;color:#ff6b6b;font-family:monospace;font-size:13px;letter-spacing:2px;">
-        LOAD ERROR<br><br>
-        <span style="font-size:11px;color:#5a6070;">スプレッドシートの公開設定を確認してください</span>
-      </div>`;
+function buildFilters() {
+  const levels = ['全て', ...new Set(allWords.map(w => w.l).filter(Boolean))];
+  const tags = ['全て', ...new Set(allWords.map(w => w.t).filter(Boolean))];
+
+  const lvContainer = document.getElementById('level-btns');
+  levels.forEach(lv => {
+    const btn = document.createElement('button');
+    btn.className = 'btn' + (lv === currentLevel ? ' active' : '');
+    btn.textContent = lv;
+    btn.dataset.val = lv;
+    btn.onclick = () => setLevel(lv);
+    lvContainer.appendChild(btn);
   });
+
+  const tagContainer = document.getElementById('tag-btns');
+  tags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'btn' + (tag === currentTag ? ' active' : '');
+    btn.textContent = tag;
+    btn.dataset.val = tag;
+    btn.onclick = () => setTag(tag);
+    tagContainer.appendChild(btn);
+  });
+}
+
+buildFilters();
+applyFilter();
+if (filteredWords[0]) updateCard(filteredWords[0]);
 </script>
 </body>
 </html>
